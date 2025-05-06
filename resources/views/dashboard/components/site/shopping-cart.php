@@ -1,11 +1,9 @@
- <!-- Shopping Cart Button -->
+<!-- Shopping Cart Button -->
 <li>
-<button id="cartToggle" class="block py-2 px-3 text-black hover:bg-black hover:text-white rounded-full flex items-center relative">
-  <i class="fas fa-shopping-cart mr-2 text-xl"></i> <!-- Icône du panier -->
-  <span class="cart-count absolute top-3 right-3 translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
-</button>
-
-
+  <button id="cartToggle" class="block py-2 px-3 text-black hover:bg-black hover:text-white rounded-full flex items-center relative">
+    <i class="fas fa-shopping-cart mr-2 text-xl"></i> <!-- Icône du panier -->
+    <span class="cart-count absolute top-3 right-3 translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
+  </button>
 </li>
 
 <!-- Shopping Cart Modal -->
@@ -41,9 +39,9 @@
               <a href="#" class="text-sm text-gray-500 hover:text-gray-700">TVA incluse et frais de port à ajouter</a>
             </div>
             <div class="mt-6">
-            <a href="/checkout" class="flex justify-center items-center px-6 py-3 border border-transparent rounded-full shadow-sm text-base font-semibold text-white bg-black hover:bg-black w-full">
-  PAYER - <span id="cart-checkout-price">0.00</span> DT
-</a>
+              <a href="/checkout" class="flex justify-center items-center px-6 py-3 border border-transparent rounded-full shadow-sm text-base font-semibold text-white bg-black hover:bg-black w-full">
+                PAYER - <span id="cart-checkout-price">0.00</span> DT
+              </a>
             </div>
           </div>
         </div>
@@ -51,6 +49,7 @@
     </div>
   </div>
 </div>
+
 <script>
   const Cart = {
     getCart() {
@@ -129,9 +128,7 @@
                 <h3>${item.name}</h3>
                 <p>${item.price.toFixed(3)} DT</p>
               </div>
-              <button class="remove-item text-red-500" data-id="${item.id}">
-
-
+              <button class="remove-item text-white bg-black-700 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-black-600 dark:hover:bg-black dark:focus:ring-blue-800" data-id="${item.id}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 7h12M9 7V4h6v3m2 0v12a2 2 0 01-2 2H8a2 2 0 01-2-2V7z"/>
                 </svg>
@@ -172,9 +169,8 @@
     document.addEventListener('click', e => {
       const id = e.target.dataset.id;
       if (e.target.classList.contains('remove-item')) {
-  Cart.removeItem(parseInt(id));
-}
-
+        Cart.removeItem(parseInt(id));
+      }
 
       if (e.target.classList.contains('decrease-quantity')) {
         const item = Cart.getCart().find(p => p.id == id);

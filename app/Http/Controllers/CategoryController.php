@@ -105,7 +105,7 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        return redirect()->route('dashboard/categories')->with('success', 'Category deleted successfully!');
+        return redirect()->route('dashboard.categories.index')->with('success', 'Category deleted successfully!');
     }
 
     public function getSubcategories($categoryId)

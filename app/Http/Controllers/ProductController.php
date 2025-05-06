@@ -145,10 +145,11 @@ class ProductController extends Controller
 
 
  
-
-public function destroy(Product $product)
+public function destroy($id)
 {
-    // Supprimer les images associées si nécessaire
+    $product = Product::findOrFail($id);
+
+    // Supprimer les fichiers d'icône liés aux spécifications (si existants)
     if ($product->specifications) {
         $specs = json_decode($product->specifications, true);
         foreach ($specs as $spec) {
@@ -158,9 +159,10 @@ public function destroy(Product $product)
         }
     }
 
+    // Supprimer le produit
     $product->delete();
 
-    return response()->json(['success' => 'Produit supprimé avec succès!']);
+    return redirect()->route('dashboard.produits.index')->with('success', 'Produit supprimé avec succès.');
 }
 
   
@@ -252,19 +254,10 @@ public function showCategoryAndSubCategoryProducts($categoryId, Request $request
 
 
 
-public function edit(Product $product)
-{
-    // Retourner les données du produit au format JSON pour le modal
-    return response()->json([
-        'product' => $product,
-        'categories' => Category::all(), // Si nécessaire pour les selects
-        'specifications' => $product->specifications ? json_decode($product->specifications, true) : []
-    ]);
-}
-
+ 
 public function update(Request $request, Product $product)
 {
-    // Valider les données (mêmes règles que pour store)
+    // Valider les données reçues
     $validated = $request->validate([
         'SKU' => 'required|string|max:255',
         'name' => 'required|string|max:255',
@@ -279,14 +272,14 @@ public function update(Request $request, Product $product)
         'specifications' => 'nullable|array',
         'specifications.*.name' => 'required_with:specifications|string|max:255',
         'specifications.*.icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'quantity' => 'required|integer|min:0',
+        'quantity' => 'required|integer|min:0', 
     ]);
 
-    // Mettre à jour le produit
+    // Mise à jour des données principales
     $product->fill($validated);
     $product->slug = Str::slug($validated['name']);
 
-    // Gérer les liens additionnels
+    // Traiter les liens additionnels
     if ($request->additional_links) {
         $links = collect(explode(',', $request->additional_links))
             ->map(fn($link) => ['url' => trim($link)])
@@ -294,7 +287,7 @@ public function update(Request $request, Product $product)
         $product->additional_links = json_encode($links);
     }
 
-    // Gérer les spécifications
+    // Traiter les spécifications (avec upload d'icône)
     if ($request->specifications) {
         $specs = [];
         foreach ($request->specifications as $index => $specification) {
@@ -302,15 +295,11 @@ public function update(Request $request, Product $product)
                 $specData = ['name' => $specification['name']];
 
                 if ($request->hasFile("specifications.$index.icon")) {
-                    // Supprimer l'ancienne icône si elle existe
-                    if (isset($specification['old_icon'])) {
-                        Storage::disk('public')->delete($specification['old_icon']);
-                    }
-
                     $iconPath = $request->file("specifications.$index.icon")->store('specification-icons', 'public');
                     $specData['icon'] = $iconPath;
-                } elseif (isset($specification['old_icon'])) {
-                    $specData['icon'] = $specification['old_icon'];
+                } elseif (isset($specification['existing_icon'])) {
+                    // Garde l’icône existante si elle est envoyée (cas de l’édition)
+                    $specData['icon'] = $specification['existing_icon'];
                 }
 
                 $specs[] = $specData;
@@ -322,10 +311,21 @@ public function update(Request $request, Product $product)
 
     $product->save();
 
-    return response()->json(['success' => 'Produit mis à jour avec succès!']);
+    return redirect()
+        ->route('dashboard.produits.index')
+        ->with('success', 'Produit modifié avec succès !');
 }
 
 
+
+// Exemple dans le contrôleur
+public function edit($id)
+{
+    $product = Product::findOrFail($id);
+    $categories = Category::all();  // Récupère toutes les catégories
+
+    return view('dashboard.produits.index', compact('product', 'categories'));
+}
 
 
 

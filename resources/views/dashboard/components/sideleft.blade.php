@@ -58,9 +58,9 @@
                             <a href="{{ route('dashboard.ajouter-produits') }}" class="block font-normal w-full text-[#6D6F71] hover:text-theme nav-dot">Ajouter</a>
                         </li>
                         <li>
-                            <a href="produits" class="block font-normal w-full text-[#6D6F71] hover:text-theme nav-dot">Listes</a>
+                            <a href="{{ route('dashboard.produits.index') }}" class="block font-normal w-full text-[#6D6F71] hover:text-theme nav-dot">Listes</a>
                         </li>
-                        
+                       
                     </ul>
                 </li>
                 

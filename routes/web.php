@@ -67,10 +67,10 @@ Route::get('transaction', function () {
 
 // Category Routes
 Route::middleware(['auth'])->group(function () { 
-Route::resource('dashboard/categories', CategoryController::class)
-    ->names('dashboard.categories');});
-    Route::middleware(['auth'])->group(function () { Route::prefix('dashboard/categories')->name('dashboard.categories.')->group(function () {
-    Route::get('/', [CategoryController::class, 'index'])->name('index');
+Route::resource('dashboard/categories', CategoryController::class)->names('dashboard.categories');});
+   
+    Route::prefix('dashboard/categories')->name('dashboard.categories.')->group(function () {
+    Route::get('dashboard/categories', [CategoryController::class, 'index'])->name('index');
     Route::get('/create', [CategoryController::class, 'create'])->name('create');
     Route::post('/', [CategoryController::class, 'store'])->name('store');
     Route::get('/{category}/edit', [CategoryController::class, 'edit'])->name('edit');
@@ -80,7 +80,7 @@ Route::resource('dashboard/categories', CategoryController::class)
     // AJAX route for subcategories
     Route::get('/{category}/subcategories', [CategoryController::class, 'getSubcategories'])
          ->name('subcategories');
-});
+ 
 });
 Route::middleware(['auth'])->group(function () { 
 Route::get('/dashboard/categories', [CategoryController::class, 'categories']);});
@@ -95,9 +95,18 @@ Route::get('/dashboard/produits', [ProductController::class, 'index'])->name('da
 
 Route::post('/dashboard/validate-sku', [ProductController::class, 'validateSku'])->name('dashboard.validate.sku');
 Route::resource('dashboard/produits', ProductController::class)->names('dashboard.produits');
-Route::put('dashboard/produits/{id}', [ProductController::class, 'update'])->name('produits.update');
-Route::delete('dashboard/produits/{id}', [ProductController::class, 'destroy'])->name('produits.destroy');
+// Afficher le formulaire de modification du produit
+Route::get('/dashboard/produits/{id}/edit', [ProductController::class, 'edit'])
+    ->name('produits.edit');
+
+// Mettre à jour le produit
+Route::put('/dashboard/produits/{id}', [ProductController::class, 'update'])
+    ->name('produits.update');
+
  });
+ 
+ Route::delete('/dashboard/produits/{id}', [ProductController::class, 'destroy'])->name('produits.destroy');
+
 //afficher produit
 
 Route::get('/produit/{id}', [ProductController::class, 'show'])->name('product.detail')->middleware(TrackVisitor::class);;
