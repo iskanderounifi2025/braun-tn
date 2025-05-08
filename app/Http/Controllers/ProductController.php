@@ -240,12 +240,12 @@ public function showCategoryAndSubCategoryProducts($categoryId, Request $request
             $productsQuery->orderBy('name', 'desc');
             break;
         default:
-            $productsQuery->orderBy('created_at', 'desc');
+            $productsQuery->orderBy('created_at', 'asc');
             break;
     }
 
     // Récupérer les produits filtrés ou paginés
-    $products = $productsQuery->paginate(48);
+    $products = $productsQuery->orderBy('sale_price', 'asc')->paginate(48);
 
     // Retourner la vue avec les données nécessaires
     return view('categorie', compact('category', 'subCategories', 'products', 'sort_by'));

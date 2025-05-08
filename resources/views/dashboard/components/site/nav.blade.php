@@ -55,11 +55,10 @@
     <!-- Zone icônes (panier + menu) -->
     <div class="flex items-center space-x-4">
       <!-- Panier -->
-      <button id="mobileCartToggle" class="text-gray-700 hover:text-black">
-        <ul class="flex flex-col p-4 font-medium border border-gray-100 rounded-lg bg-white">
-          @include('dashboard.components.site.shopping-cart')
-        </ul>
-      </button>
+     <!-- In your mobile nav section, replace the cart button with: -->
+    <!-- Replace the mobile cart button with this simplified version -->
+    @include('dashboard.components.site.shopping-cart')
+
 
       <!-- Menu hamburger -->
       <button id="mobile-menu-button" class="p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100">

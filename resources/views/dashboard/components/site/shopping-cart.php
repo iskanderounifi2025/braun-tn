@@ -1,48 +1,52 @@
-<!-- Shopping Cart Button -->
-<li>
-  <button id="cartToggle" class="block py-2 px-3 text-black hover:bg-black hover:text-white rounded-full flex items-center relative">
-    <i class="fas fa-shopping-cart mr-2 text-xl"></i> <!-- Icône du panier -->
-    <span class="cart-count absolute top-3 right-3 translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
+ <!-- Shopping Cart Button - Desktop -->
+ <li class="hidden sm:block">
+  <button id="mobileCartToggle" class="py-2 px-3 text-black hover:bg-black hover:text-white rounded-full flex items-center relative">
+    <i class="fas fa-shopping-cart mr-2 text-xl"></i>
+    <span class="cart-count-mobile absolute top-3 right-3 translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
   </button>
 </li>
 
-<!-- Shopping Cart Modal -->
+<button id="mobileCartToggle" class="p-2 text-black hover:text-black relative md:hidden">
+      <i class="fas fa-shopping-cart text-xl"></i>
+      <span class="cart-count-mobile absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
+    </button>
+<!-- Shopping Cart Button - Mobile (include in mobile nav) -->
+ <!-- Shopping Cart Modal -->
 <div id="cartModal" class="fixed inset-0 z-50 overflow-hidden hidden">
-  <div class="absolute inset-0 overflow-hidden">
-    <div class="fixed inset-y-0 right-0 pl-10 max-w-full flex">
-      <div class="w-screen max-w-md">
-        <div class="h-full flex flex-col bg-white shadow-xl">
-          <div class="flex-1 py-6 overflow-y-auto px-4 sm:px-6">
-            <div class="flex items-start justify-between">
-              <h2 class="text-lg font-medium text-gray-900">Panier (<span id="cart-total-items">0</span> produits)</h2>
-              <button id="closeCart" type="button" class="-mr-2 p-2 text-gray-400 hover:text-gray-500">
-                <span class="sr-only">Fermer</span>
-                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div class="mt-8">
-              <div class="flow-root">
-                <ul id="cart-items" class="-my-6 divide-y divide-gray-200">
-                  <!-- Cart items will be dynamically added here -->
-                </ul>
-              </div>
+  <div class="absolute inset-0 bg-black bg-opacity-50 transition-opacity" id="cartBackdrop"></div>
+  <div class="fixed inset-y-0 right-0 max-w-full flex">
+    <div class="w-screen max-w-md transform transition-transform">
+      <div class="h-full flex flex-col bg-white shadow-xl">
+        <div class="flex-1 py-6 overflow-y-auto px-4 sm:px-6">
+          <div class="flex items-start justify-between">
+            <h2 class="text-lg font-medium text-gray-900">Panier (<span id="cart-total-items">0</span> produits)</h2>
+            <button id="closeCart" type="button" class="-mr-2 p-2 text-gray-400 hover:text-gray-500">
+              <span class="sr-only">Fermer</span>
+              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <div class="mt-8">
+            <div class="flow-root">
+              <ul id="cart-items" class="-my-6 divide-y divide-gray-200">
+                <!-- Cart items will be dynamically added here -->
+              </ul>
             </div>
           </div>
-          <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
-            <div class="flex justify-between text-base font-medium text-gray-900 mb-2">
-              <p>Total</p>
-              <p id="cart-total-price">0.00 DT</p>
-            </div>
-            <div class="text-center mb-4">
-              <a href="#" class="text-sm text-gray-500 hover:text-gray-700">TVA incluse et frais de port à ajouter</a>
-            </div>
-            <div class="mt-6">
-              <a href="/checkout" class="flex justify-center items-center px-6 py-3 border border-transparent rounded-full shadow-sm text-base font-semibold text-white bg-black hover:bg-black w-full">
-                PAYER - <span id="cart-checkout-price">0.00</span> DT
-              </a>
-            </div>
+        </div>
+        <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
+          <div class="flex justify-between text-base font-medium text-gray-900 mb-2">
+            <p>Total</p>
+            <p id="cart-total-price">0.00 DT</p>
+          </div>
+          <div class="text-center mb-4">
+            <a href="#" class="text-sm text-gray-500 hover:text-gray-700">TVA incluse et frais de port à ajouter</a>
+          </div>
+          <div class="mt-6">
+            <a href="/checkout" class="flex justify-center items-center px-6 py-3 border border-transparent rounded-full shadow-sm text-base font-semibold text-white bg-black hover:bg-black w-full">
+              PAYER - <span id="cart-checkout-price">0.00</span> DT
+            </a>
           </div>
         </div>
       </div>
@@ -98,16 +102,21 @@
 
     updateUI() {
       const cart = this.getCart();
+      const totalItems = this.getTotalItems();
+      const totalPrice = this.getTotalPrice();
+      
+      // Update all cart counters
+      document.querySelectorAll('.cart-count, .cart-count-mobile').forEach(el => {
+        el.textContent = totalItems;
+      });
+      
+      // Update modal information
+      document.getElementById('cart-total-items').textContent = totalItems;
+      document.getElementById('cart-total-price').textContent = totalPrice.toFixed(3) + ' DT';
+      document.getElementById('cart-checkout-price').textContent = totalPrice.toFixed(3);
+
+      // Render cart items
       const $items = document.getElementById('cart-items');
-      const $count = document.querySelector('.cart-count');
-      const $totalItems = document.getElementById('cart-total-items');
-      const $totalPrice = document.getElementById('cart-total-price');
-      const $checkoutPrice = document.getElementById('cart-checkout-price');
-
-      $count.textContent = $totalItems.textContent = this.getTotalItems();
-      $totalPrice.textContent = this.getTotalPrice().toFixed(3) + ' DT';
-      $checkoutPrice.textContent = this.getTotalPrice().toFixed(3);
-
       $items.innerHTML = '';
 
       if (cart.length === 0) {
@@ -128,7 +137,7 @@
                 <h3>${item.name}</h3>
                 <p>${item.price.toFixed(3)} DT</p>
               </div>
-              <button class="remove-item text-white bg-black-700 hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-black-600 dark:hover:bg-black dark:focus:ring-blue-800" data-id="${item.id}">
+              <button class="remove-item text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" data-id="${item.id}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 7h12M9 7V4h6v3m2 0v12a2 2 0 01-2 2H8a2 2 0 01-2-2V7z"/>
                 </svg>
@@ -149,37 +158,66 @@
     }
   };
 
-  function addToCart(id, name, price, image = '/placeholder.jpg') {
-    Cart.addItem(id, name, price, image);
-    toggleCart();
-  }
-
+  // Toggle cart visibility with animations
   function toggleCart() {
     const modal = document.getElementById('cartModal');
-    modal.classList.toggle('hidden');
-    document.body.classList.toggle('overflow-hidden');
+    const backdrop = document.getElementById('cartBackdrop');
+    
+    if (modal.classList.contains('hidden')) {
+      // Open modal
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        backdrop.classList.remove('opacity-0');
+        backdrop.classList.add('opacity-50');
+      }, 10);
+    } else {
+      // Close modal
+      backdrop.classList.remove('opacity-50');
+      backdrop.classList.add('opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+      }, 300);
+    }
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  // Initialize cart functionality
+  function initCart() {
     Cart.updateUI();
 
-    document.getElementById('cartToggle')?.addEventListener('click', toggleCart);
+    // Desktop cart toggle
+    document.getElementById('cartToggle')?.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleCart();
+    });
+
+    // Mobile cart toggle
+    document.getElementById('mobileCartToggle')?.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleCart();
+    });
+
+    // Close button
     document.getElementById('closeCart')?.addEventListener('click', toggleCart);
 
-    document.addEventListener('click', e => {
+    // Close when clicking on backdrop
+    document.getElementById('cartBackdrop')?.addEventListener('click', toggleCart);
+
+    // Handle cart item interactions
+    document.addEventListener('click', function(e) {
       const id = e.target.dataset.id;
+      
       if (e.target.classList.contains('remove-item')) {
         Cart.removeItem(parseInt(id));
       }
-
-      if (e.target.classList.contains('decrease-quantity')) {
+      else if (e.target.classList.contains('decrease-quantity')) {
         const item = Cart.getCart().find(p => p.id == id);
         if (item && item.quantity > 1) {
           Cart.updateQuantity(item.id, item.quantity - 1);
         }
       }
-
-      if (e.target.classList.contains('increase-quantity')) {
+      else if (e.target.classList.contains('increase-quantity')) {
         const item = Cart.getCart().find(p => p.id == id);
         if (item) {
           Cart.updateQuantity(item.id, item.quantity + 1);
@@ -187,17 +225,34 @@
       }
     });
 
-    document.addEventListener('change', e => {
+    // Handle quantity input changes
+    document.addEventListener('change', function(e) {
       if (e.target.classList.contains('quantity-input')) {
         const id = e.target.dataset.id;
         const qty = parseInt(e.target.value) || 1;
         Cart.updateQuantity(parseInt(id), qty);
       }
     });
-  });
 
-  function removeProduct(button) {
-    const productElement = button.closest('.product');
-    productElement.remove();
+    // Touch support for mobile
+    document.addEventListener('touchend', function(e) {
+      if (e.target.id === 'mobileCartToggle' || e.target.closest('#mobileCartToggle')) {
+        e.preventDefault();
+        toggleCart();
+      }
+    }, { passive: false });
   }
+
+  // Initialize when DOM is loaded
+  if (document.readyState !== 'loading') {
+    initCart();
+  } else {
+    document.addEventListener('DOMContentLoaded', initCart);
+  }
+
+  // Public function to add items to cart
+  window.addToCart = function(id, name, price, image = '/placeholder.jpg') {
+    Cart.addItem(id, name, price, image);
+    toggleCart();
+  };
 </script>

@@ -9,42 +9,47 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->string('short_description')->nullable();
-            $table->text('description');
-            $table->decimal('regular_price');
-            $table->decimal('sale_price')->nullable();
-            $table->string('SKU');
-            $table->enum('stock_status', ['instock', 'outofstock']);
-            $table->boolean('featured')->default(false);
-            $table->unsignedInteger('quantity')->default(10);
-            $table->string('image')->nullable();
-            $table->text('images')->nullable();
-            $table->bigInteger('category_id')->unsigned()->nullable();            
-            $table->bigInteger('sous_categorie_id')->unsigned()->nullable(); // Sous-catégorie
-            $table->unsignedBigInteger('attribut_id')->nullable();
-            $table->string('value_attribut')->nullable()->default('');  // Ajout de value_attribut avec valeur par défaut
-            $table->integer('Publié')->default(1); // Statut de publication (0 pour non publié, 1 pour publié)
-            $table->text('Type')->nullable(); // Type du produit
-             
-            $table->timestamps();
+
+        /**
+         * Run the migrations.
+         */
+        public function up(): void
+        {
+            Schema::create('products', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->string('slug')->unique();
+                $table->text('description')->nullable();
+                $table->decimal('regular_price', 10, 2);
+                $table->decimal('sale_price', 10, 2)->nullable();
+                $table->string('SKU', 100)->nullable();
+                $table->enum('stock_status', ['instock', 'outofstock'])->default('instock');
+                $table->unsignedInteger('quantity')->default(0);
+                $table->bigInteger('category_id')->unsigned()->nullable();
+                $table->bigInteger('sous_categorie_id')->unsigned()->nullable(); // Sous-catégorie
+                $table->longText('specifications')->nullable()->check('json_valid(specifications)');
+                $table->longText('additional_links')->nullable()->check('json_valid(additional_links)');
+                $table->enum('status', ['published', 'draft'])->default('published');
+                $table->string('type', 50)->nullable();
+                $table->unsignedInteger('order')->default(0); // Remplaçant de "Publié"
+                
+                $table->timestamps();
+                
+                // Ajout des clés étrangères
+                $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
+                $table->foreign('sous_categorie_id')->references('id')->on('categories')->onDelete('set null');
+            });
+        }
+        
+        /**
+         * Reverse the migrations.
+         */
+        public function down(): void
+        {
+            Schema::dropIfExists('products');
+        }
+    };
     
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');    
-            $table->foreign('attribut_id')->references('id')->on('attributs')->onDelete('cascade');    
-        });
-    }
     
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('product');
-    }
-};
+ 

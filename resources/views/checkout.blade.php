@@ -24,7 +24,7 @@
         }
     </style>
 </head>
-<body class="bg-black p-4 md:p-8">
+<body class="py-20 md:py-16 bg-black py-20 md:py-14">
     <!-- Header -->
     @include('dashboard.components.site.nav')
     
@@ -184,6 +184,8 @@
             </div>
         </div>
     </div>
+    @include('dashboard.components.site.footer')
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];

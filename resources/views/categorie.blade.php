@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <meta name="description" content="Découvrez tous nos produits dans la catégorie {{ $category->name }}. Produits de qualité à prix compétitifs.">
     <meta name="keywords" content="Produits, {{ $category->name }}">
     <meta name="author" content="Ton Nom">
@@ -26,16 +27,16 @@
     </style>
 </head>
 
-<body class="bg-black flex flex-col min-h-screen">
+<body class="py-20 md:py-16 bg-black flex flex-col min-h-screen">
 
     @include('dashboard.components.site.nav')
     
-    <div class="py-14">
+    <div class="">
         @include('dashboard.components.site.counter')
     </div>
 
     <main class="container mx-auto px-2 max-w-4xl">
-        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2">
+       <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2">
             @forelse($products as $product)
                 @php
                     $links = $product->additional_links ? json_decode($product->additional_links, true) : [];
@@ -62,7 +63,7 @@
                             @php
                                 $discount = (($product->regular_price - $product->sale_price) / $product->regular_price) * 100;
                             @endphp
-                            <span class="absolute top-2 right-2 bg-red-500 text-white text-[10px] sm:text-xs md:text-sm px-1 sm:px-2 py-0.5 sm:py-1 rounded-full">
+                            <span class="absolute top-2 right-2 text-white text-xs px-1 py-3 rounded-full z-10 h-[40px] w-[40px]" style="background: linear-gradient(50deg, #a28147, #c19b56);">
                                 -{{ round($discount) }}%
                             </span>
                         @endif
@@ -124,7 +125,7 @@
                     <p class="text-lg">Aucun produit trouvé dans cette catégorie.</p>
                 </div>
             @endforelse
-        </div>
+        </div></a>
 
         <!-- Pagination -->
         @if($products->hasPages())
@@ -135,5 +136,7 @@
             </div>
         @endif
     </main>
+    @include('dashboard.components.site.footer')
+
 </body>
 </html>

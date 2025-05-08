@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Découvrez les meilleurs produits Braun en Tunisie - Épilateurs, soins du visage et appareils de beauté à des prix exceptionnels">
+  <meta name="description" content="Parcourez la gamme de produits Braun Tunisie pour le rasage des hommes, l'épilation des femmes, la beauté de la peau et des cheveux.">
   <meta name="keywords" content="Braun Tunisie, épilateur Braun, Silk-épil, Face Spa, soin visage, beauté, épilation">
   <meta name="robots" content="index, follow">
   <meta property="og:title" content="Braun Tunisie - Produits de beauté et épilation">
@@ -13,7 +14,7 @@
   <meta property="og:image" content="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745834716/SE9_1_fmisxu.png">
   <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
 
-  <title>Braun Tunisie | Produits d'épilation et soins du visage</title>
+  <title>Braun Tunisie</title>
   <link rel="canonical" href="https://www.braun.tn" />
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -38,10 +39,10 @@
 <body class="bg-black flex items-center justify-center min-h-screen">
   @include('dashboard.components.site.nav')
 
-  <div class="flex flex-col items-center w-full max-w-6xl py-20">
+  <div class="py-20 md:py-16 flex flex-col items-center w-full max-w-6xl">
     @include('dashboard.components.site.counter')
     <!-- Première ligne avec 3 cartes -->
-    <div class="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-6">
+    <div class="hidden lg:grid grid-cols-3 gap-6 w-full mb-6">
       <!-- Carte 1 - Face Spa -->
       <div class="product-card bg-white rounded-2xl shadow-lg overflow-hidden relative">
         <a href="categorie/51" class="block h-full">
@@ -50,7 +51,7 @@
               <span class="absolute text-white font-bold flex items-center justify-center rounded-full 
                 w-12 h-12 text-sm sm:w-12 sm:h-12 sm:text-base md:w-14 md:h-14 md:text-lg
                 mx-28 my-16" style="background-color:#c19a55">
-                -18%
+                -20%
               </span>
 
               <div class="md:w-1/2">
@@ -106,7 +107,7 @@
               <span class="absolute text-white font-bold flex items-center justify-center rounded-full 
                 w-12 h-12 text-sm sm:w-12 sm:h-12 sm:text-base md:w-14 md:h-14 md:text-lg
                 mx-28 my-16" style="background-color:#c19a55">
-                -23%
+                -20%
               </span>
 
               <div class="md:w-1/2">
@@ -117,7 +118,7 @@
               </div>
               
               <div class="md:w-1/2 flex justify-center md:justify-end mb-4 md:mb-0">
-                <img src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745834720/SE3_1_u7fkwo.png" 
+                <img src="https://res.cloudinary.com/dlhonl1wo/image/upload/v1746605459/7500435224970_3_j6guhg.jpg" 
                      alt="Braun Silk-épil 3 - Épilateur électrique" 
                      class="w-40 h-40 object-contain" 
                      loading="lazy" />
@@ -157,7 +158,7 @@
               <span class="absolute text-white font-bold flex items-center justify-center rounded-full 
                 w-12 h-12 text-sm sm:w-12 sm:h-12 sm:text-base md:w-14 md:h-14 md:text-lg
                 mx-28 my-16" style="background-color:#c19a55">
-                -24%
+                -20%
               </span>
 
               <div class="md:w-1/2">
@@ -212,49 +213,59 @@
     </div>
 
     <!-- Deuxième ligne avec 2 cartes centrées -->
-    <div class="hidden md:grid grid-cols-1 md:grid-cols-2 gap-6 w-full md:w-2/3">
-            <!-- Carte 4 - Silk·épil 9 -->
+    <div class="hidden lg:grid grid-cols-2 gap-6 w-2/3">
+      <!-- Carte 4 - Silk·épil 9 -->
       <div class="product-card bg-white rounded-2xl shadow-lg overflow-hidden relative">
         <a href="categorie/53" class="block h-full">
-          <div class="h-48 bg-white from-blue-100 to-cyan-100 flex items-center justify-center">
-            <img src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745834720/SE3_1_u7fkwo.png" 
-            alt="Braun Silk-épil 3 - Épilateur électrique" 
-            class="w-40 h-40 object-contain" 
-            loading="lazy" />
-        </div>
-        
-        <div class="p-4 flex flex-col flex-grow">
+          <div class="card-content p-6 pb-20">
             <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
-                <span class="absolute text-white font-bold flex items-center justify-center rounded-full 
-                  w-12 h-12 text-sm sm:w-12 sm:h-12 sm:text-base md:w-14 md:h-14 md:text-lg
-                  mx-28 my-16" style="background-color:#c19a55">
-                  -23%
-                </span>
-  
-                <div class="md:w-1/2">
-                  <h2 class="text-xl font-bold text-gray-800">Silk·épil 3</h2>
-                  <p class="text-gray-600 mb-4">À partir de : </p>
-                  <span class="px-5 line-through mr-2">209 DT</span><br>
-                  <span class="px-5 text-2xl font-bold text-black">160 DT</span>
-                </div>
+              <span class="absolute text-white font-bold flex items-center justify-center rounded-full 
+                w-12 h-12 text-sm sm:w-12 sm:h-12 sm:text-base md:w-14 md:h-14 md:text-lg
+                mx-28 my-16" style="background-color:#c19a55">
+                -20%
+              </span>
+
+              <div class="md:w-1/2">
+                <h2 class="text-xl font-bold text-gray-800">Silk·épil 9</h2>
+                <p class="text-gray-600 mb-4">À partir de : </p>
+                <span class="px-5 line-through mr-2">783 DT</span><br>
+                <span class="px-5 text-2xl font-bold text-black">600 DT</span>
+              </div>
+              
+              <div class="md:w-1/2 flex justify-center md:justify-end mb-4 md:mb-0">
+                <img src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745834716/SE9_1_fmisxu.png" 
+                     alt="Braun Silk-épil 9 - Épilateur haut de gamme" 
+                     class="w-40 h-40 object-contain" 
+                     loading="lazy" />
+              </div>
             </div>
-          
-            <ul class="space-y-3 mb-6 flex-grow">
-                <li class="flex items-center">
-                  <img src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745835274/40micro-grip-1_slbn6r.svg" 
-                       alt="Icone pincettes" class="w-5 h-5 mr-3" loading="lazy" />
-                  <span class="text-gray-700">20 Pincettes d'épilation</span>
-                </li>
-                <li class="flex items-center">
-                  <img src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745835273/Smart-Light_qxtyfz.svg" 
-                       alt="Icone lumière" class="w-5 h-5 mr-3" loading="lazy" />
-                  <span class="text-gray-700">Lumière intégrée</span>
-                </li>
-                <li class="flex items-center">
-                  <img src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745834887/trace_fa6pw2.png" 
-                       alt="Icone utilisation" class="w-5 h-5 mr-3" loading="lazy" />
-                  <span class="text-gray-700">Utilisation surprise</span>
-                </li>
+
+            <ul class="space-y-3 mb-6">
+              <li class="flex items-center">
+                <img src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745834893/40micro-grip-1_s779bt.png" 
+                     alt="Icone pincettes" class="w-5 h-5 mr-3" loading="lazy" />
+                <span class="text-gray-700">40 Pincettes d'épilation</span>
+              </li>
+              <li class="flex items-center">
+                <img src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745834894/Smart-Light_iabb8q.png" 
+                     alt="Icone lumière" class="w-5 h-5 mr-3" loading="lazy" />
+                <span class="text-gray-700">Lumière intégrée</span>
+              </li>
+              <li class="flex items-center">
+                <img src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745835171/svgviewer-png-output_zolmwi.png" 
+                     alt="Icone capteur" class="w-5 h-5 mr-3" loading="lazy" />
+                <span class="text-gray-700">Capteur de pression</span>
+              </li>
+              <li class="flex items-center">
+                <img src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745834893/wetdry_h6ica9.png" 
+                     alt="Icone eau" class="w-5 h-5 mr-3" loading="lazy" />
+                <span class="text-gray-700">Fonctionne sous l'eau</span>
+              </li>
+              <li class="flex items-center">
+                <img src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745834895/batterie_lvjpxb.png" 
+                     alt="Icone batterie" class="w-5 h-5 mr-3" loading="lazy" />
+                <span class="text-gray-700">50 min d'autonomie</span>
+              </li>
             </ul>
 
             <button class="absolute bottom-0 right-0 hover:text-white font-bold py-3 px-6 rounded-tl-lg transition duration-200 text-white" style="background: linear-gradient(50deg, #a28147, #c19b56);">
@@ -272,7 +283,7 @@
               <span class="absolute text-white font-bold flex items-center justify-center rounded-full 
                 w-12 h-12 text-sm sm:w-12 sm:h-12 sm:text-base md:w-14 md:h-14 md:text-lg
                 mx-24 my-16" style="background-color:#c19a55">
-                -24%
+                -20%
               </span>
 
               <div class="md:w-1/2">
@@ -283,7 +294,7 @@
               </div>
               
               <div class="md:w-1/2 flex justify-center md:justify-end mb-4 md:mb-0">
-                <img src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745834716/SE9_1_fmisxu.png" 
+                <img src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745834717/SE9F_1_x1rzec.png" 
                      alt="Braun Silk-épil 9 Flex - Épilateur flexible" 
                      class="w-40 h-40 object-contain" 
                      loading="lazy" />
