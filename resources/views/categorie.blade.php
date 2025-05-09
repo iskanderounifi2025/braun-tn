@@ -13,8 +13,7 @@
     <meta property="og:title" content="{{ $category->name }} | Produits" />
     <meta property="og:description" content="Découvrez tous nos produits dans la catégorie {{ $category->name }}." />
     <meta property="og:type" content="website" />
-    <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -35,7 +34,7 @@
         @include('dashboard.components.site.counter')
     </div>
 
-    <main class="container mx-auto px-2 max-w-4xl">
+    <main class="container mx-auto px-2 max-w-4xl py-4">
        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2">
             @forelse($products as $product)
                 @php

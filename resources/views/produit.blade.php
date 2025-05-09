@@ -21,7 +21,7 @@
     <meta property="og:description" content="{{ Str::limit(strip_tags($product->desciption), 160) }}">
     <meta property="og:image" content="{{ $firstLink }}">
     <meta property="og:url" content="{{ url('/produit/'.$product->id) }}">
-    <meta property="og:site_name" content="NomDeTonSite">
+    <meta property="og:site_name" content="Braun Tunisie">
   
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
@@ -34,8 +34,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 	 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-     <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
-     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <style>
     body {
@@ -46,14 +45,14 @@
 
 
  
-<body class="bg-black">
+<body class="py-20 md:py-16 bg-black flex flex-col min-h-screen">
 
   @include('dashboard.components.site.nav')
-  <div class="py-20 md:py-16">
+  <div class="">
     @include('dashboard.components.site.counter')
 </div>
   
-    <div class="container mx-auto px-4 py-2 max-w-6xl bg-white rounded-lg">
+    <div class="container mx-auto px-4 py-10 max-w-6xl bg-white rounded-lg">
         <div class="flex flex-col md:flex-row gap-8">
             <!-- Colonne gauche - Images -->
  
@@ -152,9 +151,9 @@
                         
                         <!-- Bouton d'action avec intégration du panier -->
                         <button 
-                          class="bg-black text-white py-2 px-5 rounded-full font-medium transition duration-200 flex items-center justify-center"
+                          class="text-white py-2 px-5 rounded-full font-medium transition duration-200 flex items-center justify-center"
                           onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->regular_price }}, '{{ $firstLink }}', parseInt(document.getElementById('quantity').value))"
-                        >
+                          style="background: linear-gradient(50deg, #a28147, #c19b56);">
                           <i class="fas fa-shopping-cart mr-2"></i>
                           Ajouter au panier
                         </button>

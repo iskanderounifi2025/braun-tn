@@ -15,16 +15,17 @@
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
- 
+    <link rel="shortcut icon" href="../assets/img/logo/favicon.png" type="image/x-icon">
+
     <!-- css links -->
     
 </head>
 <body>
-    @include('dashboard.components.sideleft')
 
        
     <div class="tp-main-wrapper bg-slate-100 h-screen" x-data="{ sideMenu: false }">
-         
+        @include('dashboard.components.sideleft')
+
 
         <div class="fixed top-0 left-0 w-full h-full z-40 bg-black/70 transition-all duration-300" :class="sideMenu ? 'visible opacity-1' : '  invisible opacity-0 '" x-on:click="sideMenu = ! sideMenu"> </div>
 

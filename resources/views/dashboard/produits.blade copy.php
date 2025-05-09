@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <link rel="shortcut icon" href="../assets/img/logo/favicon.png" type="image/x-icon">
+
  </head>
 <body class="bg-slate-100 h-screen" x-data="{ sideMenu: false, showEditModal: false, showDeleteModal: false, currentProductId: null }">
 

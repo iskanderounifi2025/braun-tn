@@ -1,15 +1,6 @@
  <!-- Shopping Cart Button - Desktop -->
- <li class="hidden sm:block">
-  <button id="mobileCartToggle" class="py-2 px-3 text-black hover:bg-black hover:text-white rounded-full flex items-center relative">
-    <i class="fas fa-shopping-cart mr-2 text-xl"></i>
-    <span class="cart-count-mobile absolute top-3 right-3 translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
-  </button>
-</li>
+ 
 
-<button id="mobileCartToggle" class="p-2 text-black hover:text-black relative md:hidden">
-      <i class="fas fa-shopping-cart text-xl"></i>
-      <span class="cart-count-mobile absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
-    </button>
 <!-- Shopping Cart Button - Mobile (include in mobile nav) -->
  <!-- Shopping Cart Modal -->
 <div id="cartModal" class="fixed inset-0 z-50 overflow-hidden hidden">

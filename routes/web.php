@@ -61,6 +61,9 @@ Route::get('transaction', function () {
     return view('dashboard/transaction');
 })->name('transaction');
 
+Route::get('dashboard/forgot', function () {
+    return view('dashboard/forgot');
+});
 
 
  
@@ -103,10 +106,13 @@ Route::get('/dashboard/produits/{id}/edit', [ProductController::class, 'edit'])
 Route::put('/dashboard/produits/{id}', [ProductController::class, 'update'])
     ->name('produits.update');
 
+    Route::get('dashboard/produits/{product}/edit', [ProductController::class, 'edit'])->name('produits.edit');
+Route::put('dashboard/produits/{product}', [ProductController::class, 'update'])->name('produits.update');
+Route::delete('dashboard/produits/{product}', [ProductController::class, 'destroy'])->name('produits.destroy');
+
  });
  
- Route::delete('/dashboard/produits/{id}', [ProductController::class, 'destroy'])->name('produits.destroy');
-
+ 
 //afficher produit
 
 Route::get('/produit/{id}', [ProductController::class, 'show'])->name('product.detail')->middleware(TrackVisitor::class);;
@@ -171,6 +177,8 @@ Route::get('/api/check-stock/{productId}', [OrderController::class, 'checkStock'
     Route::get('dashboard/clients', [OrderController::class, 'clients'])->name('clients');
 Route::get('/dashboard/client/{email}', [OrderController::class, 'commandesClient'])->name('commandes.client');
 Route::get('dashboard/clients/{email}/commandes', [OrderController::class, 'commandesClient'])->name('clients.commandes');
+Route::get('/commandes/{red_order}/export-pdf', [OrderController::class, 'exportPdf'])->name('commandes.export.pdf');
+
 });
 //contact
 Route::post('/contact', [ContactController::class, 'store'])->name('devenir-revendeur.store')->middleware(TrackVisitor::class);;
@@ -195,19 +203,38 @@ Route::put('/dashboard/users/{id}', [UserController::class, 'update'])->name('da
 
 // Delete user
 Route::delete('/dashboard/users/{id}', [UserController::class, 'destroy'])->name('dashboard.users.destroy');
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
 });
+ 
+
+
+
+
 
 //dashabord 
 
 Route::middleware(['auth'])->group(function () { 
 Route::get('/dashboard/home', [DashboardController::class, 'index'])->name('dashboard');
 });
+
+//Forget password
+ 
+Route::get('dashboad/forgot', [UserController::class, 'showForgotPasswordForm'])->name('password.request');
+Route::post('dashboad/forgot', [UserController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('dashboad/reset-password/{token}', [UserController::class, 'showResetForm'])->name('password.reset');
+Route::post('dashboad/reset-password', [UserController::class, 'resetPassword'])->name('password.update');
+
+
+
+
+
+
 //Login admin
 
 // Routes d'authentification
 Route::get('/dashboard/', [UserController::class, 'showLogin'])->name('login');
 Route::post('/dashboard/', [UserController::class, 'login']);
-Route::post('/dashboard/logout', [UserController::class, 'logout'])->name('logout');
 
 // Routes de réinitialisation de mot de passe
 Route::get('/dashboard/forgot-password', [UserController::class, 'showForgotPasswordForm'])->name('password.request');
@@ -225,7 +252,3 @@ Route::middleware(['auth'])->group(function () {
     });
 
 
-
-    Route::get('dashboard/produits/{product}/edit', [ProductController::class, 'edit'])->name('produits.edit');
-Route::put('dashboard/produits/{product}', [ProductController::class, 'update'])->name('produits.update');
-Route::delete('dashboard/produits/{product}', [ProductController::class, 'destroy'])->name('produits.destroy');

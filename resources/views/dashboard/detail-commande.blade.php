@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Braun - Détails de la commande #{{ $red_order }} </title>
-    <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/img/logo/favicon.png" type="image/x-icon">
 
     <!-- css links -->
     <link rel="stylesheet" href="{{ asset('assets/css/perfect-scrollbar.css') }}">
@@ -227,7 +227,7 @@ $firstImageUrl = is_array($imageData) && isset($imageData[0]['url']) ? $imageDat
                                                     Subtotal
                                                 </td>
                                                 <td class="px-3 py-3 pt-6 font-normal text-[#55585B] text-end">
-                                                    ${{ number_format($totalSubtotal, 2) }}
+                                                     {{ number_format($totalSubtotal, 2) }} DT
                                                 </td>
                                             </tr>                                          
                                             <tr class="bg-white border-b border-gray6 last:border-0 text-start mx-9">

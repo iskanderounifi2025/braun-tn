@@ -447,6 +447,45 @@ public function clients(Request $request)
 
 
 
+public function exportPdf($red_order)
+{
+    $ordersGroup = DB::table('orders')
+        ->join('products', 'orders.id_produit', '=', 'products.id')
+        ->select(
+            'orders.red_order',
+            'orders.nom',
+            'orders.prenom',
+            'orders.telephone',
+            'orders.email',
+            'orders.date_order',
+            'orders.adress',
+            'orders.gouvernorat',
+            'orders.quantite_produit',
+            'orders.prix_produit',
+            'products.name AS produit'
+        )
+        ->where('orders.red_order', $red_order)
+        ->get();
+
+    if ($ordersGroup->isEmpty()) {
+        abort(404, 'Commande introuvable.');
+    }
+
+    // Ajouter total et prix_unitaire dans chaque élément
+    foreach ($ordersGroup as $order) {
+        $order->quantite = $order->quantite_produit;
+        $order->prix_unitaire = $order->prix_produit;
+        $order->total = $order->quantite * $order->prix_unitaire;
+    }
+
+    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('dashboard.commande-pdf', [
+        'ordersGroup' => $ordersGroup,
+        'red_order' => $red_order
+    ]);
+
+    return $pdf->stream("commande-{$red_order}.pdf");
+}
+
 
 
 

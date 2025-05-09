@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;           
 use Illuminate\Support\Facades\Auth;
  use Illuminate\Support\Facades\Password;
+ use Illuminate\Support\Facades\Mail;
+ use Illuminate\Validation\ValidationException;
+
 class UserController extends Controller
 {
 
@@ -98,38 +101,46 @@ class UserController extends Controller
 
     // Traiter la connexion
     public function login(Request $request)
-    {
-        // Étape 1 : Valider l'email et le mot de passe
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required', 'string', 'min:6'],
-        ]);
-    
-        // Étape 2 : Tentative de connexion
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate(); // Protection contre la fixation de session
-            return redirect()->route('dashboard')->with('success', 'Connexion réussie.');
-        }
-    
-        // Étape 3 : Retour avec message d’erreur
-        return back()->withErrors([
-            'email' => 'Les informations de connexion sont incorrectes.',
-        ])->withInput();
+{
+    // ✅ Étape 1 : Validation stricte des entrées
+    $credentials = $request->validate([
+        'email' => ['required', 'email', 'max:255'],
+        'password' => ['required', 'string', 'min:6', 'max:100'],
+    ]);
+
+    // ✅ Étape 2 : Vérification des tentatives (optionnel : rate limiter Laravel)
+    if (Auth::attempt($credentials, $request->boolean('remember'))) {
+        $request->session()->regenerate(); // 🔒 Anti-fixation de session
+
+        return redirect()->intended(route('dashboard'))
+                         ->with('success', 'Connexion réussie.');
     }
-    
+
+    // ❌ Échec de l'authentification
+    throw ValidationException::withMessages([
+        'email' => 'Les informations de connexion sont incorrectes.',
+    ]);
+}
+
+
+
+    public function logout(Request $request)
+{
+    Auth::logout(); // Déconnexion de l'utilisateur
+
+    $request->session()->invalidate(); // Invalider la session
+    $request->session()->regenerateToken(); // Régénérer le token CSRF
+
+    return redirect()->route('login')->with('success', 'Déconnexion réussie.');
+}
     // Déconnexion
-    public function logout()
-    {
-        Auth::logout();
-        return redirect()->route('dashboard.login')->with('success', 'Déconnecté avec succès.');
-    }
-
+    
     // Afficher le formulaire de réinitialisation de mot de passe
-    public function showForgotPasswordForm()
+    /*public function showForgotPasswordForm()
     {
-        return view('admin.login'); // Assurez-vous que cette vue existe
+        return view('dashboard.login'); // Assurez-vous que cette vue existe
     }
-
+*/
     // Envoyer le lien de réinitialisation de mot de passe
     public function sendResetLink(Request $request)
     {
@@ -167,7 +178,91 @@ class UserController extends Controller
         $user = Auth::user(); // Récupère l'utilisateur actuellement authentifié
         return view('dashboard.profile', compact('user')); // Transmet l'utilisateur à la vue
     }
-    
- 
+    public function updatePassword(Request $request)
+{
+    $request->validate([
+        'current_password' => 'required',
+        'new_password' => 'required|min:8|confirmed',
+    ]);
+
+    $user = Auth::user();
+
+    if (!Hash::check($request->current_password, $user->password)) {
+        return back()->withErrors(['current_password' => 'Mot de passe actuel incorrect.']);
+    }
+
+    // Mise à jour du mot de passe
+    $user->password = Hash::make($request->new_password);
+    $user->save();
+
+    // Déconnexion automatique
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    // Rediriger vers login avec message
+    return redirect()->route('login')->with('success', 'Votre mot de passe a été modifié. Veuillez vous reconnecter.');
+}
+
+
+/*Forget  password */
+
+// 1. Affiche le formulaire de demande de lien de réinitialisation
+public function showForgotPasswordForm()
+{
+    return view('dashboard.forgot');
+}
+
+// 2. Envoie le lien de réinitialisation à l'e-mail de l'utilisateur
+public function sendResetLinkEmail(Request $request)
+{
+    $request->validate(['email' => 'required|email']);
+
+    $status = Password::sendResetLink(
+        $request->only('email')
+    );
+
+    return $status === Password::RESET_LINK_SENT
+        ? back()->with('status', __($status))
+        : back()->withErrors(['email' => __($status)]);
+}
+
+// 3. Affiche le formulaire de réinitialisation avec le token
+public function showResetForm(Request $request, $token = null)
+{
+    return view('dashboard.reset', [
+        'token' => $token,
+        'email' => $request->email
+    ]);
+}
+
+// 4. Réinitialise le mot de passe de l'utilisateur
+public function resetPassword(Request $request)
+{
+    $request->validate([
+        'token' => 'required',
+        'email' => 'required|email|exists:users,email',
+        'password' => 'required|confirmed|min:8',
+    ]);
+
+    $status = Password::reset(
+        $request->only('email', 'password', 'password_confirmation', 'token'),
+        function ($user, $password) {
+            $user->forceFill([
+                'password' => Hash::make($password),
+                'remember_token' => Str::random(60),
+            ])->save();
+        }
+    );
+
+    return $status === Password::PASSWORD_RESET
+        ? redirect()->route('login')->with('status', __($status))
+        : back()->withErrors(['email' => [__($status)]]);
+}
+
+
+
+
+
 }
  

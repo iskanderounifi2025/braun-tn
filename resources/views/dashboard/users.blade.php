@@ -5,11 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des Utilisateurs</title>
-    <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome optimisé -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
+    <link rel="shortcut icon" href="../assets/img/logo/favicon.png" type="image/x-icon">
+
 </head>
 <body class="bg-slate-100">
     <div class="tp-main-wrapper h-screen" x-data="{ sideMenu: false }">

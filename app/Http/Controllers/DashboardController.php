@@ -41,26 +41,29 @@ class DashboardController extends Controller
     
         // Statistiques par statut
         $statuses = ['encours', 'traité', 'annulé'];
-        $statusData = [];
-        foreach ($statuses as $status) {
-            $orders = Order::where('status', $status)->get();
-            $totalSubtotal = 0;
-            $totalItems = 0;
+$statusData = [];
+
+foreach ($statuses as $status) {
+    $orders = Order::where('status', $status)
+        ->groupBy('red_order')
+        ->select(
+            'red_order',
+            DB::raw('SUM(prix_produit * quantite_produit) as total_amount'),
+            DB::raw('SUM(quantite_produit) as total_items')
+        )
+        ->get();
+
+    $totalSubtotal = $orders->sum('total_amount');
+    $totalItems = $orders->sum('total_items');
+
+    $statusData[$status] = [
+        'order_count' => $orders->count(), // Nombre de red_order uniques
+        'total_amount' => $totalSubtotal,
+        'total_items' => $totalItems,
+    ];
+}
     
-            foreach ($orders as $order) {
-                $subtotal = $order->prix_produit * $order->quantite_produit;
-                $totalSubtotal += $subtotal;
-                $totalItems += $order->quantite_produit;
-            }
-    
-            $statusData[$status] = [
-                'order_count' => $orders->count(),
-                'total_amount' => $totalSubtotal,
-                'total_items' => $totalItems,
-            ];
-        }
-    
-        // Statistiques pour les modes de paiement
+ // Statistiques pour les modes de paiement
         $paymentData = Order::select('mode_paiement', DB::raw('COUNT(DISTINCT red_order) as count'))
             ->groupBy('mode_paiement')
             ->pluck('count', 'mode_paiement');
@@ -207,11 +210,17 @@ class DashboardController extends Controller
     return [\Carbon\Carbon::createFromDate($order->year, $order->month, 1)->format('M Y'), $order->count];
     });
 
-    $ventesParMois = [];
     $produitsParMois = [];
+    $ventesParMois = [];
+    $currentYear = date('Y');
+
 
     for ($i = 1; $i <= 12; $i++) {
-        $ventesParMois[] = Order::whereMonth('created_at', $i)->whereYear('created_at', date('Y'))->count();
+        $ventesParMois[] = DB::table('orders')
+            ->whereMonth('created_at', $i)
+            ->whereYear('created_at', $currentYear)
+            ->select(DB::raw('COUNT(DISTINCT red_order) as nombre_commandes'))
+            ->value('nombre_commandes');
         $produitsParMois[] = Product::whereMonth('created_at', $i)->whereYear('created_at', date('Y'))->count();
     }
 
@@ -231,7 +240,8 @@ $stats = DB::table('orders')
 ->select('gouvernorat', DB::raw('COUNT(DISTINCT red_order) as nombre_commandes'))
 ->groupBy('gouvernorat')
 ->get();
- 
+$totalClients = Order::distinct('email')->count('email');
+
 
         // Passer les données à la vue
         return view('dashboard.index', [
@@ -262,7 +272,8 @@ $stats = DB::table('orders')
     'produitsParMois'=>$produitsParMois,
     'labels'=>$labels, 
     'data'=>$data,
-    'stats' => $stats
+    'stats' => $stats,
+    'totalClients'=>$totalClients
     
          ]);
     }

@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="flex items-center justify-between mb-5">
-                    <a href="forgot" class="text-sm font-medium text-blue-600 hover:underline">Mot de passe oublié ?</a>
+                    <a href="{{ route('password.request') }}" class="text-sm font-medium text-blue-600 hover:underline">Mot de passe oublié ?</a>
                 </div>
 
                 <button type="submit" class="w-full h-12 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">

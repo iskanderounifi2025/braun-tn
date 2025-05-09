@@ -1,8 +1,8 @@
 <aside class="w-[300px] lg:w-[250px] xl:w-[300px] border-r border-gray overflow-y-scroll sidebar-scrollbar fixed left-0 top-0 h-full bg-white z-50 transition-transform duration-300" :class="sideMenu ? 'translate-x-[0px]' : ' -translate-x-[300px] lg:translate-x-[0]'">
     <div class="">
-        <div class="py-4 pb-8 px-8 border-b border-gray h-[78px]">
+        <div class="py-4 pb-8 px-10 border-b border-gray h-[78px]">
             <a href="">
-                <img class="w-[100px] h-[50px]" src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745420211/braun.tn/logo/vfqv40by0uco5dvofusj.png" alt="">
+                <img class="w-[100px] h-[40px]" src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745420211/braun.tn/logo/vfqv40by0uco5dvofusj.png" alt="">
             </a>
         </div>
         <div class="px-4 py-5" x-data="{nav:null}">

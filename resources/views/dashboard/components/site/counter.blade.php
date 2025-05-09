@@ -9,8 +9,8 @@
 
     <!-- Colonne 2 : Contenu principal -->
     <div class="flex flex-col items-center text-center p-1 md:p-6 rounded-lg">
-      <h2 id="promo-title" class="text-base md:text-4xl font-semibold text-white mb-1"></h2>
-      <h4 id="promo-dates" class="text-base md:text-3xl font-regular text-white mb-1"></h4>
+      <h2 id="promo-title" class="text-lg md:text-3xl font-semibold text-white mb-1"></h2>
+      <h4 id="promo-dates" class="text-base md:text-2xl font-regular text-white mb-1"></h4>
     
       <div id="countdown" class="flex flex-row justify-center gap-2 text-xl md:text-3xl font-bold transition duration-500 ease-in-out">
         <div class="flex flex-col items-center text-white rounded-full px-4 py-2" style="background-color:#c19b56">

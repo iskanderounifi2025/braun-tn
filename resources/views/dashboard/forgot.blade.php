@@ -1,60 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<!-- Mirrored from html.hixstudio.net/ebazer/forgot.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 19 Apr 2025 11:45:40 GMT -->
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Réinitialiser le mot de passe</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eBazer - Tailwind CSS eCommerce Admin Template</title>
-    <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
-
-    <!-- css links -->
-    <link rel="stylesheet" href="assets/css/perfect-scrollbar.css">
-    <link rel="stylesheet" href="assets/css/choices.css">
-    <link rel="stylesheet" href="assets/css/apexcharts.css">
-    <link rel="stylesheet" href="assets/css/quill.css">
-    <link rel="stylesheet" href="assets/css/rangeslider.css">
-    <link rel="stylesheet" href="assets/css/custom.css">
-    <link rel="stylesheet" href="assets/css/main.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
 
-    <!--  -->
-    <div class="tp-main-wrapper h-screen">
-        <div class="container mx-auto my-auto h-full flex items-center justify-center">
-            <div class="w-[500px] mx-auto my-auto shadow-lg bg-white pt-[50px] py-[60px] px-[60px]">
-                <div class="text-center">
-                    <h4 class="text-[24px] mb-1">Reset Password</h4>
-                    <p>Enter your email address to request password reset.</p>
-                </div>
-                <div class="">
-                    <form action="#">
-                        <div class="mb-5">
-                            <p class="mb-0 text-base text-black">Email <span class="text-red">*</span></p>
-                            <input class="input w-full h-[49px] rounded-md border border-gray6 px-6 text-base" type="email" placeholder="Enter Your Email">
-                        </div>
-                        <button class="tp-btn h-[49px] w-full justify-center">Send Mail</button>
-
-                        <div class="tp-checkbox flex items-start space-x-2 mt-5 justify-center">
-                            <p class="mb-0 leading-none">Remember password ? <a href="login.html" class="text-theme border-b border-transparent hover:border-theme">Login</a></p>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-semibold text-gray-800">Réinitialisation du mot de passe</h1>
+            <p class="text-gray-600 text-sm">Entrez votre adresse email pour recevoir un lien de réinitialisation.</p>
         </div>
+
+        @if (session('success'))
+        <div class="bg-green-100 text-green-700 p-3 rounded-md mb-5">{{ session('success') }}</div>
+    @endif
+    @if ($errors->any())
+        <div class="bg-red-100 text-red-700 p-3 rounded-md mb-5">
+            <ul class="list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+        <form method="POST" action="{{ route('password.email') }}">
+            @csrf
+
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-700">Adresse email</label>
+                <input type="email" name="email" id="email" required
+                       class="mt-1 w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                       placeholder="votre@email.com">
+                @error('email')
+                    <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit"
+                        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-150">
+                    Envoyer le lien
+                </button>
+            </div>
+        </form>
     </div>
 
-    <script src="assets/js/alpine.js"></script>
-    <script src="assets/js/perfect-scrollbar.js"></script>
-    <script src="assets/js/choices.js"></script>
-    <script src="assets/js/chart.js"></script>
-    <script src="assets/js/apexchart.js"></script>
-    <script src="assets/js/quill.js"></script>
-    <script src="assets/js/rangeslider.min.js"></script>
-    <script src="assets/js/main.js"></script>
-    
 </body>
-
-<!-- Mirrored from html.hixstudio.net/ebazer/forgot.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 19 Apr 2025 11:45:40 GMT -->
 </html>

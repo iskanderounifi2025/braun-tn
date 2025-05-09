@@ -35,7 +35,7 @@
     }
   </style>
 </head>
-<body class="py-20 md:py-18 bg-black text-white">
+<body class="py-20 md:py-16 bg-black text-white">
 
   @include('dashboard.components.site.nav')
 
@@ -44,7 +44,7 @@
   </div>
 
   <section class="container mx-auto px-4 py-0">
-    <h1 class="text-xl md:text-4xl font-bold text-center mb-12">Notre Service Après-Vente</h1>
+    <h1 class="text-xl md:text-4xl font-bold text-center mb-3">Notre Service Après-Vente</h1>
 
     <div class="flex flex-col lg:flex-row gap-8">
       <!-- Colonne gauche -->

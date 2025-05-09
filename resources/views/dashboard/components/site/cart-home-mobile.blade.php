@@ -163,7 +163,7 @@
       <div class="product-card bg-white rounded-2xl shadow-lg overflow-hidden relative">
         <a href="categorie/53" class="block h-full">
             <div class="h-40 sm:h-48 bg-white from-yellow-100 to-amber-100 flex items-center justify-center">
-                <img src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745834717/SE9F_1_x1rzec.png" 
+                <img src="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745834716/SE9_1_fmisxu.png" 
                 alt="Braun Silk-épil 9 - Épilateur haut de gamme" 
                 class="w-32 h-32 sm:w-40 sm:h-40 object-contain" 
                 loading="lazy" />

@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listes de clients</title>
-    <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
-    <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
+   
     <link rel="stylesheet" href="{{ asset('assets/css/perfect-scrollbar.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/choices.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/apexcharts.css') }}">
@@ -17,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="../assets/img/logo/favicon.png" type="image/x-icon">
 
     <!-- css links -->
  

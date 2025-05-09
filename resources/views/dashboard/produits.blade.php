@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    
+    <link rel="shortcut icon" href="../assets/img/logo/favicon.png" type="image/x-icon">
+
     <style>
         [x-cloak] { display: none !important; }
     </style>
@@ -92,10 +93,14 @@
                                 <th class="px-3 py-3 text-right">Catégorie</th>
                                 <th class="px-3 py-3 text-right">SKU</th>
                                 <th class="px-3 py-3 text-right">Prix</th>
+                                <th class="px-3 py-3 text-right">Stock</th>
+
                                 <th class="px-3 py-3 text-right">Statut</th>
-                                <th class="px-3 py-3 text-right">Modifier</th>
-                                <th class="px-3 py-3 text-right">Supprimer</th>
-                                <th class="px-9 py-3 text-right">Détail</th>
+                                <th class="px-3 py-3 text-right"></th>
+                                <th class="px-3 py-3 text-right"></th>
+                                <th class="px-9 py-3 text-right"></th>
+                                <th class="px-9 py-3 text-right">Date Ajouter</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -148,12 +153,12 @@
                                 <td class="px-3 py-3 text-right text-gray-700">
                                     {{ $product->category->name ?? 'N/A' }}
                                 </td>
-                            
+                                
                                 <!-- SKU -->
                                 <td class="px-3 py-3 text-right text-gray-700">
                                     {{ $product->SKU ?? 'N/A' }}
                                 </td>
-                            
+                               
                                 <!-- Prix -->
                                 <td class="px-3 py-3 text-right text-gray-700">
                                     {{ $product->regular_price }} DT
@@ -161,7 +166,26 @@
                                         <span class="ml-2 line-through text-red-500">{{ $product->sale_price }} DT</span>
                                     @endif
                                 </td>
-                            
+                                <td class="px-3 py-3 text-right text-gray-700">
+                                    @php
+                                        $quantity = $product->quantity ?? 0;
+                                    @endphp
+                                
+                                    @if ($quantity > 10)
+                                        <span class="inline-block px-2 py-1 text-xs font-semibold text-green-700 bg-green-100 rounded-full">
+                                            En stock ({{ $quantity }})
+                                        </span>
+                                    @elseif ($quantity > 0)
+                                        <span class="inline-block px-2 py-1 text-xs font-semibold text-yellow-700 bg-yellow-100 rounded-full">
+                                            Stock faible ({{ $quantity }})
+                                        </span>
+                                    @else
+                                        <span class="inline-block px-2 py-1 text-xs font-semibold text-red-700 bg-red-100 rounded-full">
+                                            Rupture
+                                        </span>
+                                    @endif
+                                </td>
+                                
                                 <!-- Status -->
                                 <td class="px-3 py-3 text-right">
                                     <span class="text-xs px-3 py-1 rounded-md bg-green-100 text-green-800 font-medium">
@@ -185,10 +209,17 @@
                                     data-target="delete-modal-{{ $product->id }}">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
-
-                                    
-                                </td>
+</td>
                             
+ 
+<td class="px-3 py-3 text-right">
+<span class="text-xs px-3 py-1 rounded-md bg-blue-100 text-blue-800 font-medium">
+    {{ \Carbon\Carbon::parse($product->created_at)->translatedFormat('d F Y à H:i') }}
+
+</span>
+</td>
+ 
+
                                 <!-- Bouton Voir -->
                                 <td class="px-6 py-3 text-right">
                                     <a href="{{ url('/produit/'.$product->id) }}" target="_blank">

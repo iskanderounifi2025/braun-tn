@@ -13,6 +13,13 @@ use Carbon\Carbon;
 class ProductController extends Controller
 {
 
+
+    public function boot()
+    {
+        Carbon::setLocale('fr');
+        App::setLocale('fr');
+    }
+
     public function add_product()
     {
         $categories = Category::whereNull('parent_id')->orderBy('name')->get();
@@ -328,7 +335,21 @@ public function edit($id)
 }
 
 
+public static function getNotifications()
+{
+    $lowStockThreshold = 5;
 
+    $lowStockProducts = Product::where('quantity', '>', 0)
+        ->where('quantity', '<=', $lowStockThreshold)
+        ->get();
+
+    $outOfStockProducts = Product::where('quantity', '=', 0)->get();
+
+    return [
+        'low_stock' => $lowStockProducts,
+        'out_of_stock' => $outOfStockProducts,
+    ];
+}
 
 
 
