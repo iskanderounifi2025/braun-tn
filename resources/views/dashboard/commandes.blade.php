@@ -63,7 +63,7 @@
                 
                     <div class="tp-search-box flex items-center justify-between px-8 py-8 flex-wrap">
                         <div class="search-input relative">
-                            <form action="{{ route('groupedOrders') }}" method="GET">
+                            <form action="{{ route('dashboard.commandes.groupedOrders') }}" method="GET">
                                 <input class="input h-[44px] w-full pl-14" type="text" name="search" placeholder="Rechercher par identifiant de commande" value="{{ request('search') }}">
                                 <button class="absolute top-1/2 left-5 translate-y-[-50%] hover:text-theme">
                                     <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -101,10 +101,10 @@
                                 @foreach($groupedOrders as $red_order => $ordersGroup)
                                     <tr class="bg-white border-b border-gray6 last:border-0 text-start">
                                         <td class="px-3 py-3">
-                                            <a href="{{ route('commandes.show', $red_order) }}" class="text-blue-600 hover:underline">#{{ $red_order }}</a>
+                                            <a href="{{ route('dashboard.commandes.show', $red_order) }}" class="text-blue-600 hover:underline">#{{ $red_order }}</a>
                                         </td>
                                         <td class="px-3 py-3">
-                                            <a href="{{ route('commandes.show', $red_order) }}" class="text-blue-600 hover:underline">
+                                            <a href="{{ route('dashboard.commandes.show', $red_order) }}" class="text-blue-600 hover:underline">
                                                 {{ \Carbon\Carbon::parse($ordersGroup[0]->date_order)->format('d, M, Y \à H\hi') }}
                                             </a>
                                         </td>
@@ -114,18 +114,18 @@
                                         <td class="px-3 py-3">{{ $ordersGroup[0]->telephone }}</td>
                                         <td class="px-3 py-3">{{ $ordersGroup[0]->email }}</td>
                                         <td class="px-3 py-3">
-                                            <a href="{{ route('commandes.show', $red_order) }}" class="text-blue-600 hover:underline">
+                                            <a href="{{ route('dashboard.commandes.show', $red_order) }}" class="text-blue-600 hover:underline">
                                                 {{ $ordersGroup[0]->gouvernorat }}
                                             </a>
                                         </td>
                                         <td class="px-3 py-3">{{ $ordersGroup[0]->adress }}</td>
                                         <td class="px-3 py-3">
-                                            <a href="{{ route('commandes.show', $red_order) }}" class="text-blue-600 hover:underline">
+                                            <a href="{{ route('dashboard.commandes.show', $red_order) }}" class="text-blue-600 hover:underline">
                                                 {{ $ordersGroup->sum('total') }} DT
                                             </a>
                                         </td>
                                         <td class="px-3 py-3">
-                                            <a href="{{ route('commandes.show', $red_order) }}">
+                                            <a href="{{ route('dashboard.commandes.show', $red_order) }}">
                                                 @if($ordersGroup[0]->status === 'pending')
                                                     <span class="inline-block px-2 py-1 text-sm font-medium text-yellow-800 bg-yellow-100 rounded">En attente</span>
                                                 @elseif($ordersGroup[0]->status === 'delivered')
@@ -138,7 +138,7 @@
                                             </a>
                                         </td>
                                         <td class="px-3 py-3">
-                                            <form action="{{ route('dashboard.updateStatusOrder', $ordersGroup[0]->red_order) }}" method="POST">
+                                            <form action="{{ route('dashboard.commandes.updateStatusOrder', $ordersGroup[0]->red_order) }}" method="POST">
                                                 @csrf
                                                 @method('PUT')
                                                 <select name="status" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
@@ -153,7 +153,7 @@
                                         </td>
                                         <td class="px-9 py-3 text-end">
                                             <div class="flex justify-end space-x-2">
-                                                <a href="{{ route('commandes.show', $red_order) }}" class="px-3 h-10 bg-success text-white rounded-md hover:bg-green-600" target="_blank">Voir</a>
+                                                <a href="{{ route('dashboard.commandes.show', $red_order) }}" class="px-3 h-10 bg-success text-white rounded-md hover:bg-green-600" target="_blank">Voir</a>
                                             </div>
                                         </td>
                                     </tr>

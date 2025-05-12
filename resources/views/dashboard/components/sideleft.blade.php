@@ -11,7 +11,7 @@
                     <a 
                     @click="nav !== 0 ? nav = 0 : nav = null" 
                     :class="nav == 0 ? 'bg-themeLight hover:bg-themeLight text-theme' : ''"
-                    href="{{ route('dashboard') }}" 
+                    href="{{ route('dashboard.home') }}" 
                     class="group rounded-md relative text-black text-lg font-medium inline-flex items-center w-full transition-colors ease-in-out duration-300 px-5 py-[9px] mb-2 hover:bg-gray sidebar-link-active"
 
                     >
@@ -55,7 +55,7 @@
                     </a>
                     <ul x-show="nav == 1" class="pl-[42px] pr-[20px] pb-3">
                         <li>
-                            <a href="{{ route('dashboard.ajouter-produits') }}" class="block font-normal w-full text-[#6D6F71] hover:text-theme nav-dot">Ajouter</a>
+                            <a href="{{ route('dashboard.produits.add') }}" class="block font-normal w-full text-[#6D6F71] hover:text-theme nav-dot">Ajouter</a>
                         </li>
                         <li>
                             <a href="{{ route('dashboard.produits.index') }}" class="block font-normal w-full text-[#6D6F71] hover:text-theme nav-dot">Listes</a>
@@ -82,7 +82,7 @@
                     </a>
                     <ul x-show="nav == 3" class="pl-[42px] pr-[20px] pb-3">
                         <li>
-                            <a href="{{ route('clients') }}" class="block font-normal w-full text-[#6D6F71] hover:text-theme nav-dot">Listes</a>
+                            <a href="{{ route('dashboard.clients.index') }}" class="block font-normal w-full text-[#6D6F71] hover:text-theme nav-dot">Listes</a>
                         </li>
                          
                     </ul>
@@ -106,10 +106,10 @@
                     </a>
                     <ul x-show="nav == 4" class="pl-[42px] pr-[20px] pb-3">
                         <li>
-                            <a href="{{ route('groupedOrders') }}" class="block font-normal w-full text-[#6D6F71] hover:text-theme nav-dot">Listes</a>
+                            <a href="{{ route('dashboard.commandes.groupedOrders') }}" class="block font-normal w-full text-[#6D6F71] hover:text-theme nav-dot">Listes</a>
                         </li>
                         <li>
-                            <a href="clients" class="block font-normal w-full text-[#6D6F71] hover:text-theme nav-dot">Clients</a>
+                            <a href="{{ route('dashboard.clients.index') }}" class="block font-normal w-full text-[#6D6F71] hover:text-theme nav-dot">Clients</a>
                         </li>
                        <!-- <li>
                             <a href="{{ route('transaction') }}" class="block font-normal w-full text-[#6D6F71] hover:text-theme nav-dot">Transactions</a>
@@ -118,7 +118,7 @@
                 </li>
           <li>
                     <a 
-                    href="{{ route('dashboard.users') }}" 
+                    href="{{ route('dashboard.users.index') }}" 
                     class="group rounded-md relative text-black text-lg font-medium inline-flex items-center w-full transition-colors ease-in-out duration-300 px-5 py-[9px] mb-3 hover:bg-gray sidebar-link-active">
                         <span class="inline-block translate-y-[1px] mr-[10px] text-xl">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -152,7 +152,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('demandes.index') }}"
+                    <a href="{{ route('dashboard.demandes.index') }}"
                     class="group rounded-md relative text-black text-lg font-medium inline-flex items-center w-full transition-colors ease-in-out duration-300 px-5 py-[9px] mb-3 hover:bg-gray sidebar-link-active">
                         <span class="inline-block translate-y-[1px] mr-[10px] text-xl">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">

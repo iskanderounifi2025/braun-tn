@@ -100,7 +100,7 @@
       
       <!-- Carte 2 - Silk·épil 3 -->
       <div class="product-card bg-white rounded-2xl shadow-lg overflow-hidden relative">
-        <a href="categorie/50" class="block h-full">
+        <a href="categorie/1" class="block h-full">
           <div class="card-content p-6 pb-20">
             <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
               <span class="absolute text-white font-bold flex items-center justify-center rounded-full 

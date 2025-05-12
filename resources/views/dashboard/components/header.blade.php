@@ -41,7 +41,7 @@
                         <h3 class="text-sm font-medium text-gray-900">Notifications</h3>
                     </div>
                     <div class="divide-y divide-gray-100">
-                        <a href="{{ route('demandes.index') }}" class="flex items-center px-4 py-3 hover:bg-gray-50">
+                        <a href="{{ route('dashboard.demandes.index') }}" class="flex items-center px-4 py-3 hover:bg-gray-50">
                             <div class="flex-shrink-0 bg-blue-100 rounded-md p-2">
                                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 10.5h.01m-4.01 0h.01M8 10.5h.01M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-6.6a1 1 0 0 0-.69.275l-2.866 2.723A.5.5 0 0 1 8 18.635V17a1 1 0 0 0-1-1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/>
@@ -55,7 +55,7 @@
                         </a>
                     </div>
                     <div class="px-4 py-2 text-center">
-                        <a href="{{ route('demandes.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-500">Voir toutes</a>
+                        <a href="{{ route('dashboard.demandes.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-500">Voir toutes</a>
                     </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                     </div>
                     <div class="divide-y divide-gray-100 max-h-60 overflow-y-auto">
                         @foreach ($ordersGroupedByRedOrder as $orderGroup)
-                        <a href="{{ route('groupedOrders') }}" class="flex items-center px-4 py-3 hover:bg-gray-50">
+                        <a href="{{ route('dashboard.commandes.groupedOrders') }}" class="flex items-center px-4 py-3 hover:bg-gray-50">
                             <div class="flex-shrink-0 bg-orange-100 rounded-md p-2">
                                 <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
@@ -89,7 +89,7 @@
                         @endforeach
                     </div>
                     <div class="px-4 py-2 text-center">
-                        <a href="{{ route('groupedOrders') }}" class="text-sm font-medium text-blue-600 hover:text-blue-500">Voir toutes</a>
+                        <a href="{{ route('dashboard.commandes.groupedOrders') }}" class="text-sm font-medium text-blue-600 hover:text-blue-500">Voir toutes</a>
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                         <p class="text-sm font-medium text-gray-900">{{ Auth::user()->name ?? 'Utilisateur' }}</p>
                         <p class="text-xs text-gray-500 truncate">{{ Auth::user()->email ?? 'email' }}</p>
                     </div>
-                    <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                    <a href="{{ route('dashboard.home') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
                     <a href="{{ route('dashboard.profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Paramètres</a>
                     <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Déconnexion</a>
                 </div>

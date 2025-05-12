@@ -51,7 +51,7 @@ class UserController extends Controller
 
         // Redirection après succès
         return redirect()
-            ->route('dashboard.users')
+            ->route('dashboard.users.index')
             ->with('success', 'Utilisateur ajouté avec succès.');
     }
 
@@ -76,7 +76,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->update($request->all());
     
-        return redirect()->route('dashboard.users')->with('success', 'Utilisateur mis à jour avec succès.');
+        return redirect()->route('dashboard.users.index')->with('success', 'Utilisateur mis à jour avec succès.');
     }
     
     public function destroy($id)
@@ -108,7 +108,7 @@ class UserController extends Controller
         // Étape 2 : Tentative de connexion
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate(); // Protection contre la fixation de session
-            return redirect()->route('dashboard')->with('success', 'Connexion réussie.');
+            return redirect()->route('dashboard.home')->with('success', 'Connexion réussie.');
         }
     
         // Étape 3 : Retour avec message d’erreur
@@ -170,4 +170,3 @@ class UserController extends Controller
     
  
 }
- 

@@ -46,7 +46,7 @@
             <div class="bg-white rounded-t-md rounded-b-md shadow-xs py-4">
                 <div class="tp-search-box flex items-center justify-between px-8 py-8">
                     <div class="search-input relative">
-                        <form method="GET" action="{{ route('demandes.index') }}" class="w-full">
+                        <form method="GET" action="{{ route('dashboard.demandes.index') }}" class="w-full">
                             <div class="relative">
                                 <input
                                     class="input h-[44px] w-full pl-14"

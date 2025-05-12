@@ -44,7 +44,7 @@
                                 <h3 class="mb-0 text-[28px]">Ajouter un produit</h3>
                                 <ul class="text-tiny font-medium flex items-center space-x-3 text-text3">
                                     <li class="breadcrumb-item text-muted">
-                                        <a href="{{ route('dashboard.ajouter-produits') }}" class="text-hover-primary"> Dashboard</a>
+                                        <a href="{{ route('dashboard.produits.add') }}" class="text-hover-primary"> Dashboard</a>
                                     </li>
                                     <li class="breadcrumb-item flex items-center">
                                         <span class="inline-block bg-text3/60 w-[4px] h-[4px] rounded-full"></span>
@@ -69,7 +69,7 @@
     </div>
 @endif
 
-<form action="{{ route('dashboard.ajouter-produits') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('dashboard.produits.add') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
     <div class="grid grid-cols-12 gap-6 mb-6">

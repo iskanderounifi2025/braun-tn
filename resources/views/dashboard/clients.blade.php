@@ -52,7 +52,7 @@
                 <div class="bg-white rounded-t-md rounded-b-md shadow-xs py-4">
                     <div class="tp-search-box flex items-center justify-between px-8 py-8">
                         <div class="search-input relative">
-                            <form method="GET" action="{{ route('clients') }}">
+                            <form method="GET" action="{{ route('dashboard.clients.index') }}">
                                 <div class="search-input relative">
                                     <input
                                         name="search"
@@ -110,7 +110,7 @@
                                         </div>
                                     </td>
                                     <td class="px-3 py-3 text-end">
-                                        <a href="{{ route('clients.commandes', ['email' => $client->email]) }}" class="text-blue-600 hover:underline">
+                                        <a href="{{ route('dashboard.clients.commandes', ['email' => $client->email]) }}" class="text-blue-600 hover:underline">
                                             {{ $client->email }}
                                         </a>
                                     </td>
@@ -129,7 +129,7 @@
                                         <div class="flex items-center justify-end space-x-2">
                                             <!-- Bouton Voir Commandes -->
                                             <div class="relative" x-data="{ editTooltip: false }">
-                                                <a href="{{ route('commandes.client', ['email' => $client->email]) }}" 
+                                                <a href="{{ route('dashboard.clients.commandes', ['email' => $client->email]) }}" 
                                                    class="w-10 h-10 leading-10 text-tiny bg-success text-white rounded-md hover:bg-green-600"
                                                    x-on:mouseenter="editTooltip = true" x-on:mouseleave="editTooltip = false">
                                                     <svg class="-translate-y-px" height="12" viewBox="0 0 512 512" width="12" xmlns="http://www.w3.org/2000/svg">

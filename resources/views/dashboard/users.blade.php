@@ -148,7 +148,7 @@
                                                class="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded bg-indigo-600 text-white hover:bg-indigo-700">
                                                 <i class="fas fa-edit mr-1"></i> Modifier
                                             </a>
-                                            <form action="" method="POST" onsubmit="return confirm('Confirmer la suppression ?');">
+                                            <form action="{{ route('dashboard.users.destroy', ['id' => $user->id]) }}" method="POST" onsubmit="return confirm('Confirmer la suppression ?');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"

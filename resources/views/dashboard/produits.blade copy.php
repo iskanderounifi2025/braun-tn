@@ -60,7 +60,7 @@
                     <option>Low Stock</option>
                     <option>Out of Stock</option>
                 </select>
-                <a href="{{ route('dashboard.ajouter-produits') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">Ajouter produit</a>
+                <a href="{{ route('dashboard.produits.add') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">Ajouter produit</a>
             </div>
         </div>
 

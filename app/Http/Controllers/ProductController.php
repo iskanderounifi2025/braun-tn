@@ -77,8 +77,9 @@ class ProductController extends Controller
         // Stock par défaut
         $product->stock_status = 'instock';
     
-        // Définir l’ordre d’affichage
-        $product->order = Product::max('order') + 1;
+        // Définir l'ordre d'affichage
+        #$maxOrder = Product::max('order');
+        #$product->order = $maxOrder ? (int)$maxOrder + 1 : 1;
     
         // Enregistrer
         $product->save();
@@ -298,7 +299,7 @@ public function update(Request $request, Product $product)
                     $iconPath = $request->file("specifications.$index.icon")->store('specification-icons', 'public');
                     $specData['icon'] = $iconPath;
                 } elseif (isset($specification['existing_icon'])) {
-                    // Garde l’icône existante si elle est envoyée (cas de l’édition)
+                    // Garde l'icône existante si elle est envoyée (cas de l'édition)
                     $specData['icon'] = $specification['existing_icon'];
                 }
 

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('referer')->nullable();
             $table->string('visited_page')->nullable();
             $table->timestamp('visit_time')->useCurrent();
+            $table->timestamps();
         });
     }
     

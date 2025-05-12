@@ -11,7 +11,7 @@ class CreateAttributsTable extends Migration
         Schema::create('attributs', function (Blueprint $table) {
             $table->id();
             $table->string('nom'); // Nom de l'attribut
-            $table->text('value'); // Stocke les valeurs séparées par des virgules (change 'string' en 'text')
+            $table->text('value'); // Stocke les valeurs séparées par des virgules
             $table->timestamps();
         });
     }
@@ -20,4 +20,4 @@ class CreateAttributsTable extends Migration
     {
         Schema::dropIfExists('attributs');
     }
-}
+} 

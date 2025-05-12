@@ -72,7 +72,7 @@
                                 </select>
                             </div>
                             <div class="flex">
-                                <a href="{{ route('dashboard.ajouter-produits') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">Ajouter Produit</a>
+                                <a href="{{ route('dashboard.produits.add') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">Ajouter Produit</a>
                             </div>
                         </div>
                     </div>
@@ -204,7 +204,7 @@
        
          <div class="container">
             <h2>Modifier le Produit : {{ $product->name }}</h2>
-            <form action="{{ route('produits.update', $product->id) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+            <form action="{{ route('dashboard.produits.update', $product->id) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
                 @method('PUT')
             
@@ -383,7 +383,7 @@ function addSpecification() {
           <div class="flex justify-end space-x-3">
               <button onclick="document.getElementById('deleteModal').classList.add('hidden')" class="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400">Annuler</button>
   
-              <form action="{{ route('produits.destroy', $product->id) }}" method="POST">
+              <form action="{{ route('dashboard.produits.destroy', $product->id) }}" method="POST">
                   @csrf
                   @method('DELETE')
                   <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Supprimer</button>

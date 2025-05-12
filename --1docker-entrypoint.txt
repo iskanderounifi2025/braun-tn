@@ -1,0 +1,81 @@
+#!/bin/bash
+set -e
+
+# Wait for MySQL to be ready
+echo "Waiting for MySQL to be ready..."
+max_tries=30
+count=0
+
+# Install mysql-client if not present
+if ! command -v mysql &> /dev/null; then
+    echo "Installing mysql-client..."
+    apt-get update && apt-get install -y default-mysql-client
+fi
+
+while ! mysql -h db -uroot -proot -e "SELECT 1" > /dev/null 2>&1; do
+    count=$((count + 1))
+    echo "Waiting for MySQL... ($count/$max_tries)"
+    echo "Testing MySQL connection..."
+    mysql -h db -uroot -proot -e "SELECT 1" || true
+    if [ $count -eq $max_tries ]; then
+        echo "MySQL did not become ready in time"
+        echo "Last MySQL connection attempt failed with:"
+        mysql -h db -uroot -proot -e "SELECT 1" 2>&1 || true
+        exit 1
+    fi
+    sleep 2
+done
+echo "MySQL is ready!"
+
+# Ensure storage directory exists and has correct permissions
+mkdir -p /var/www/html/storage/framework/{sessions,views,cache}
+chown -R www-data:www-data /var/www/html/storage
+chmod -R 775 /var/www/html/storage
+
+# Ensure database directory exists and has proper permissions
+mkdir -p /var/www/html/database
+chown -R www-data:www-data /var/www/html/database
+chmod -R 755 /var/www/html/database
+
+# Create SQLite database if it doesn't exist
+if [ ! -f "/var/www/html/database/database.sqlite" ]; then
+    touch /var/www/html/database/database.sqlite
+    chown www-data:www-data /var/www/html/database/database.sqlite
+    chmod 666 /var/www/html/database/database.sqlite
+fi
+
+# Copy .env file if it doesn't exist
+if [ ! -f /var/www/html/.env ]; then
+    cp /var/www/html/.env.example /var/www/html/.env
+    # Update database configuration
+    sed -i "s/DB_HOST=127.0.0.1/DB_HOST=db/" /var/www/html/.env
+    sed -i "s/DB_PORT=3306/DB_PORT=3306/" /var/www/html/.env
+    sed -i "s/DB_DATABASE=laravel/DB_DATABASE=braun_tn/" /var/www/html/.env
+    sed -i "s/DB_USERNAME=root/DB_USERNAME=root/" /var/www/html/.env
+    sed -i "s/DB_PASSWORD=/DB_PASSWORD=root/" /var/www/html/.env
+fi
+
+# Generate application key if not set
+if [ -z "$(grep '^APP_KEY=' /var/www/html/.env)" ] || [ "$(grep '^APP_KEY=' /var/www/html/.env | cut -d'=' -f2)" == "" ]; then
+    php artisan key:generate --no-interaction
+fi
+
+# Clear all caches
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+php artisan route:clear
+
+# Run database migrations
+echo "Running database migrations..."
+php artisan migrate --force
+
+# Check if we need to seed the database
+if [ ! -f "/var/www/html/database/seeded" ]; then
+    echo "Seeding the database..."
+    php artisan db:seed --force
+    touch /var/www/html/database/seeded
+fi
+
+# Start Apache
+exec "$@" 

@@ -175,7 +175,7 @@ class OrderController extends Controller
             }
 
          
-            return redirect()->route('confirmation', ['redOrder' => $redOrder])
+            return redirect()->route('checkout.confirmation', ['redOrder' => $redOrder])
                 ->with('success', 'Commande passée avec succès ! Un email de confirmation vous a été envoyé.')
                 ->with('clearCart', true); // Add a flag for JS on confirmation page
 
@@ -318,7 +318,7 @@ class OrderController extends Controller
                         'orders.prix_produit',
                         'products.id AS product_id',  
                         'products.name AS product_name',
-                        'products.additional_links AS product_image'
+                        DB::raw("JSON_UNQUOTE(JSON_EXTRACT(products.additional_links, '$[0].url')) AS product_image")
                     )
                     ->where('orders.red_order', $red_order)
                     ->get();
@@ -357,7 +357,7 @@ class OrderController extends Controller
      
          // Vérifier si la commande existe
          if (!$order) {
-             return redirect()->route('groupedOrders')->with('error', 'Aucune commande trouvée avec cet ID.');
+             return redirect()->route('commandes.groupedOrders')->with('error', 'Aucune commande trouvée avec cet ID.');
          }
      
          // Mettre à jour le statut de la commande
@@ -365,7 +365,7 @@ class OrderController extends Controller
              ->where('red_order', $red_order)
              ->update(['status' => $request->status]);
      
-         return redirect()->route('groupedOrders')->with('success', 'Statut de la commande mis à jour.');
+         return redirect()->route('commandes.groupedOrders')->with('success', 'Statut de la commande mis à jour.');
      }
      
  

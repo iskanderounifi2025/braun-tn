@@ -9,8 +9,8 @@
      <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
      <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
-
-
+ 
+ 
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -24,10 +24,10 @@
         }
     </style>
 </head>
-<body class="bg-black p-4 md:p-8">
+<body class="py-20 md:py-16 bg-black py-20 md:py-14">
     <!-- Header -->
     @include('dashboard.components.site.nav')
-    
+   
     <div class="container mx-auto flex flex-col px-4 py-12 lg:flex-row gap-6">
         <!-- Left Form Section -->
         <div class="w-full lg:w-2/3 bg-white p-6 rounded-lg shadow-md">
@@ -41,24 +41,24 @@
             <form class="space-y-4" action="{{ route('checkout.process') }}" method="POST" id="checkoutForm">
                 @csrf
                 <input type="hidden" name="products" id="productsData">
-                
+               
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label for="nom" class="block text-sm font-medium text-gray-700 mb-1">Nom*</label>
                         <input type="text" id="nom" name="nom" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
                     </div>
-                    
+                   
                     <div>
                         <label for="prenom" class="block text-sm font-medium text-gray-700 mb-1">Prénom*</label>
                         <input type="text" id="prenom" name="prenom" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
                     </div>
                 </div>
-                
+               
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email*</label>
                     <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
                 </div>
-                
+               
                 <div>
                     <label for="telephone" class="block text-sm font-medium text-gray-700 mb-1">Téléphone*</label>
                     <input type="tel"
@@ -72,7 +72,7 @@
              
                     <p class="text-xs text-gray-500 mt-1">Format: 12345678</p>
                 </div>
-                
+               
                 <div>
                     <label for="gouvernorat" class="block text-sm font-medium text-gray-700 mb-1">Gouvernorat*</label>
                     <select id="gouvernorat" name="gouvernorat" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
@@ -103,12 +103,12 @@
                         <option value="Zaghouan">Zaghouan</option>
                     </select>
                 </div>
-                
+               
                 <div>
                     <label for="adress" class="block text-sm font-medium text-gray-700 mb-1">Adresse*</label>
                     <textarea id="adress" name="adress" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent" required></textarea>
                 </div>
-                
+               
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Sexe *</label>
                     <div class="flex space-x-4">
@@ -123,17 +123,17 @@
                          
                     </div>
                 </div>
-                
+               
                 <div>
                     <label for="date_naissance" class="block text-sm font-medium text-gray-700 mb-1">Date de naissance *</label>
                     <input type="date" id="date_naissance" name="date_naissance" max="{{ date('Y-m-d') }}" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
                 </div>
-                
+               
                 <div class="pt-4">
                     <h3 class="text-lg font-medium text-gray-800 mb-3">Méthode de paiement*</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      
-                        
+                     
+                       
                         <div class="payment-method border rounded-lg p-4 cursor-pointer" data-value="carte">
                             <div class="flex items-center space-x-3">
                                 <input type="radio" name="mode_paiement" value="espace" class="h-4 w-4 text-green-600 focus:ring-green-500" checked>
@@ -145,7 +145,7 @@
                         </div>
                     </div>
                 </div>
-                
+               
                 <button type="submit" class="w-full bg-black hover:bg-gray-800 text-white font-semibold py-3 px-4 rounded-full transition duration-200 mt-6 flex items-center justify-center">
                     <span id="submitText">Passer la commande</span>
                     <svg id="submitSpinner" class="animate-spin -mr-1 ml-2 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -155,15 +155,15 @@
                 </button>
             </form>
         </div>
-        
+       
         <!-- Right Cart Section -->
         <div class="w-full lg:w-1/3 bg-white p-6 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold mb-6 text-gray-800">Votre commande</h2>
-            
+           
             <div id="checkout-items" class="space-y-4 max-h-96 overflow-y-auto">
                 <!-- Items will be added dynamically -->
             </div>
-            
+           
             <div class="pt-4 space-y-3 border-t mt-4">
                 <div class="flex justify-between">
                     <span class="text-gray-600">Sous-total:</span>
@@ -184,46 +184,48 @@
             </div>
         </div>
     </div>
+    @include('dashboard.components.site.footer')
+ 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const checkoutItemsContainer = document.getElementById('checkout-items');
             const productsDataInput = document.getElementById('productsData');
-        
+       
             // Formatage des données
             const productsData = cart.map(item => ({
                 product_id: parseInt(item.id),
                 quantity: parseInt(item.quantity),
                 price: parseFloat(item.price)
             }));
-        
+       
             // Validation des données
             const isValid = productsData.every(p =>
                 !isNaN(p.product_id) &&
                 !isNaN(p.quantity) && p.quantity > 0 &&
                 !isNaN(p.price) && p.price > 0
             );
-        
+       
             if (!isValid) {
                 console.error('Données de produit invalides:', productsData);
                 alert('Certains produits ont des données invalides');
                 return;
             }
-        
+       
             productsDataInput.value = JSON.stringify(productsData);
-        
+       
             const calculateTotals = () => {
                 const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
                 const shipping = 8.00;
                 const tax = 1.00;
                 const total = subtotal + shipping + tax;
-        
+       
                 document.getElementById('checkout-subtotal').textContent = subtotal.toFixed(2) + ' DT';
                 document.getElementById('checkout-shipping').textContent = shipping.toFixed(2) + ' DT';
                 document.getElementById('checkout-tax').textContent = tax.toFixed(2) + ' DT';
                 document.getElementById('checkout-total').textContent = total.toFixed(2) + ' DT';
             };
-        
+       
             // Affichage des produits
             if (cart.length === 0) {
                 checkoutItemsContainer.innerHTML = `
@@ -233,7 +235,7 @@
                 `;
                 return;
             }
-        
+       
             checkoutItemsContainer.innerHTML = cart.map(item => `
                 <div class="flex border-b pb-4">
                     <img src="${item.image || '/images/placeholder-product.png'}"
@@ -257,9 +259,9 @@
                     </div>
                 </div>
             `).join('');
-        
+       
             calculateTotals();
-        
+       
             // Gestion des boutons + -
             const attachQuantityListeners = () => {
                 document.querySelectorAll('.increase-quantity').forEach(btn => {
@@ -273,7 +275,7 @@
                         }
                     });
                 });
-        
+       
                 document.querySelectorAll('.decrease-quantity').forEach(btn => {
                     btn.addEventListener('click', () => {
                         const id = btn.dataset.id;
@@ -285,7 +287,7 @@
                         }
                     });
                 });
-        
+       
                 document.querySelectorAll('.quantity-input').forEach(input => {
                     input.addEventListener('change', () => {
                         const id = input.dataset.id;
@@ -304,9 +306,9 @@
                     });
                 });
             };
-        
+       
             attachQuantityListeners();
-        
+       
             // Gestion de la soumission du formulaire
             const form = document.getElementById('checkoutForm');
             form.addEventListener('submit', function(e) {
@@ -315,7 +317,7 @@
                     alert('Votre panier est vide');
                     return;
                 }
-        
+       
                 const submitBtn = this.querySelector('button[type="submit"]');
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = `
@@ -328,6 +330,6 @@
             });
         });
         </script>
-        
+       
 </body>
 </html>
