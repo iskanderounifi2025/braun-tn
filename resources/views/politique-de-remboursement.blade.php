@@ -22,10 +22,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
      body {
        font-family: 'Poppins', sans-serif;
      }
+     [lang="ar"] {
+  font-family: 'Tajawal', sans-serif;
+}
+
    </style>
     <script src="https://cdn.tailwindcss.com"></script>
   <!-- JSON-LD pour Google -->
@@ -46,15 +52,15 @@
 
   <!-- Tailwind CSS -->
  </head>
-<body class="bg-black text-white">
+<body class="py-20 md:py-16 bg-black text-white">
   
   @include('dashboard.components.site.nav')
-  <div class="py-16">
+  <div class="">
     @include('dashboard.components.site.counter')
   </div>
   <!-- Bloc français -->
-  <main lang="fr" class="max-w-4xl mx-auto px-4 sm:px-6 py-0 mt-10 rounded-xl">
-    <h1 class="text-3xl font-bold mb-6 text-center">Politique de remboursement</h1>
+  <main lang="fr" class="max-w-4xl mx-auto px-4 sm:px-6 py-0 mt-4 rounded-xl">
+    <h1 class="text-xl md:text-3xl font-bold mb-2 text-center">Politique de remboursement</h1>
 
     <div class="space-y-6 text-base text-gray-800 leading-relaxed">
       <div class="bg-white p-4 rounded-lg">
@@ -96,4 +102,3 @@
 
 </body>
 </html>
-

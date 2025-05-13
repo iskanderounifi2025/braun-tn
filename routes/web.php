@@ -53,15 +53,17 @@ Route::post('/dashboard/logout', [UserController::class, 'logout'])->name('logou
 
 // Password Reset Routes for Dashboard Users
 Route::get('/dashboard/forgot-password', [UserController::class, 'showForgotPasswordForm'])->name('password.request');
-Route::post('/dashboard/forgot-password', [UserController::class, 'sendResetLink'])->name('password.email');
+Route::post('/dashboard/forgot-password', [UserController::class, 'sendResetLinkEmail'])->name('password.email');
 // Note: You'll also need routes for password reset itself (e.g., showing the reset form with token, and handling the POST to reset)
 
+Route::get('/dashboard/reset-password/{token}', [UserController::class, 'showResetForm'])->name('password.reset'); // Route added from "updated" file
+Route::post('/dashboard/reset-password', [UserController::class, 'resetPassword'])->name('password.update'); // Route added from "updated" file
 
 // Authenticated Dashboard Routes
 Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(function () {
     // Dashboard Home
     Route::get('/home', [DashboardController::class, 'index'])->name('home'); // Was named 'dashboard', changed to 'home' to avoid conflict with prefix. Access with route('dashboard.home')
-
+    // Route::get('/profile',[UserController::class, 'showProfileDetail'])->name('profile'); // Added profile route
     // Categories
     Route::resource('categories', CategoryController::class)->names('categories'); // Access with e.g., route('dashboard.categories.index')
     Route::get('categories/{category}/subcategories', [CategoryController::class, 'getSubcategories'])->name('categories.subcategories');
@@ -74,11 +76,13 @@ Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(func
     Route::resource('produits', ProductController::class)->except(['index', 'store', 'create'])->names(['update' => 'produits.update', ]);
     Route::resource('produits', ProductController::class)->except(['index', 'store', 'create'])->names('produits'); // Use 'produits.show', 'produits.edit', etc. 'add_product' covers 'create'.
                                                                                                         // The existing index and store routes are defined above.
-
+    Route::get('/profile', [UserController::class, 'showProfileDetail'])->name('profile');
+    Route::post('/profile/password', [UserController::class, 'updatePassword'])->name('profile.password');
     // Orders
     Route::get('commandes', [OrderController::class, 'index'])->name('commandes.groupedOrders'); // Renamed from 'groupedOrders' for consistency. Access with route('dashboard.commandes.groupedOrders')
     Route::get('detail-commande/{red_order}', [OrderController::class, 'show'])->name('commandes.show');
     Route::put('commandes/{id}/status', [OrderController::class, 'updateStatusOrder'])->name('commandes.updateStatusOrder');
+    Route::get('commandes/{red_order}/export-pdf', [OrderController::class, 'exportPdf'])->name('commandes.export.pdf');
 
     // Clients
     Route::get('clients', [OrderController::class, 'clients'])->name('clients.index'); // Renamed from 'clients' for consistency
@@ -113,7 +117,7 @@ Route::get('/categorie/{categoryId}', [ProductController::class, 'showCategoryAn
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('cart.add');
 
 // Checkout Process
-Route::prefix('checkout')->group(function () {
+Route::prefix('checkout')->name('checkout.')->group(function () {
     // Afficher la page de checkout
     Route::get('/', [OrderController::class, 'checkout'])
         ->name('checkout');
@@ -121,11 +125,11 @@ Route::prefix('checkout')->group(function () {
  
     // Traiter la commande
     Route::post('/process', [OrderController::class, 'processOrder'])
-        ->name('checkout.process');
+        ->name('process');
  
     // Page de confirmation
     Route::get('/confirmation/{redOrder}', [OrderController::class, 'showOrderConfirmation'])
-        ->name('checkout.confirmation');
+        ->name('confirmation');
 });
  
 

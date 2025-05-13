@@ -41,26 +41,29 @@ class DashboardController extends Controller
     
         // Statistiques par statut
         $statuses = ['encours', 'traité', 'annulé'];
-        $statusData = [];
-        foreach ($statuses as $status) {
-            $orders = Order::where('status', $status)->get();
-            $totalSubtotal = 0;
-            $totalItems = 0;
+$statusData = [];
+
+foreach ($statuses as $status) {
+    $orders = Order::where('status', $status)
+        ->groupBy('red_order')
+        ->select(
+            'red_order',
+            DB::raw('SUM(prix_produit * quantite_produit) as total_amount'),
+            DB::raw('SUM(quantite_produit) as total_items')
+        )
+        ->get();
+
+    $totalSubtotal = $orders->sum('total_amount');
+    $totalItems = $orders->sum('total_items');
+
+    $statusData[$status] = [
+        'order_count' => $orders->count(), // Nombre de red_order uniques
+        'total_amount' => $totalSubtotal,
+        'total_items' => $totalItems,
+    ];
+}
     
-            foreach ($orders as $order) {
-                $subtotal = $order->prix_produit * $order->quantite_produit;
-                $totalSubtotal += $subtotal;
-                $totalItems += $order->quantite_produit;
-            }
-    
-            $statusData[$status] = [
-                'order_count' => $orders->count(),
-                'total_amount' => $totalSubtotal,
-                'total_items' => $totalItems,
-            ];
-        }
-    
-        // Statistiques pour les modes de paiement
+ // Statistiques pour les modes de paiement
         $paymentData = Order::select('mode_paiement', DB::raw('COUNT(DISTINCT red_order) as count'))
             ->groupBy('mode_paiement')
             ->pluck('count', 'mode_paiement');
@@ -90,33 +93,32 @@ class DashboardController extends Controller
         $orderPercentage = $totalOrders > 0 ? (($lastWeekOrders - $totalOrders) / $totalOrders) * 100 : 0;
     
         // Récupérer les statistiques mensuelles
-        $currentYear = date('Y');
-        $monthlyTotalOrders = Order::selectRaw('COUNT(DISTINCT red_order) as total_orders, MONTH(created_at) as month')
-            ->whereYear('created_at', $currentYear)
+        $monthlyTotalOrders = Order::selectRaw('COUNT(DISTINCT red_order) as total_orders, EXTRACT(MONTH FROM created_at) as month')
             ->groupBy('month')
-            ->orderBy('month', 'asc')
-            ->get();
+            ->orderBy('month')
+            ->get()
+            ->pluck('total_orders', 'month')->toArray();
     
         $monthlyPendingOrders = Order::where('status', 'encours')
-            ->selectRaw('COUNT(DISTINCT red_order) as pending_orders, MONTH(created_at) as month')
-            ->whereYear('created_at', $currentYear)
+            ->selectRaw('COUNT(DISTINCT red_order) as pending_orders, EXTRACT(MONTH FROM created_at) as month')
             ->groupBy('month')
-            ->orderBy('month', 'asc')
-            ->get();
+            ->orderBy('month')
+            ->get()
+            ->pluck('pending_orders', 'month')->toArray();
     
         $monthlyDeliveredOrders = Order::where('status', 'traité')
-            ->selectRaw('COUNT(DISTINCT red_order) as delivered_orders, MONTH(created_at) as month')
-            ->whereYear('created_at', $currentYear)
+            ->selectRaw('COUNT(DISTINCT red_order) as delivered_orders, EXTRACT(MONTH FROM created_at) as month')
             ->groupBy('month')
-            ->orderBy('month', 'asc')
-            ->get();
+            ->orderBy('month')
+            ->get()
+            ->pluck('delivered_orders', 'month')->toArray();
     
         $monthlyCanceledOrders = Order::where('status', 'annulé')
-            ->selectRaw('COUNT(DISTINCT red_order) as canceled_orders, MONTH(created_at) as month')
-            ->whereYear('created_at', $currentYear)
+            ->selectRaw('COUNT(DISTINCT red_order) as canceled_orders, EXTRACT(MONTH FROM created_at) as month')
             ->groupBy('month')
-            ->orderBy('month', 'asc')
-            ->get();
+            ->orderBy('month')
+            ->get()
+            ->pluck('canceled_orders', 'month')->toArray();
     
         // Fetch the sex distribution with counts (grouped by red_order)
         $sexDistribution = Order::selectRaw('sex, count(distinct red_order) as count')
@@ -141,7 +143,7 @@ class DashboardController extends Controller
         // Loop through each age range and get the count of orders for that range
         foreach ($ageRanges as $label => [$minAge, $maxAge]) {
             $ageDistribution[$label] = Order::selectRaw('count(*) as count')
-                ->whereRaw('FLOOR(DATEDIFF(NOW(), date_naissance) / 365.25) BETWEEN ? AND ?', [$minAge, $maxAge])
+                ->whereRaw('FLOOR(DATEDIFF(CURRENT_DATE, date_naissance) / 365) BETWEEN ? AND ?', [$minAge, $maxAge])
                 ->count();
         }
     
@@ -173,33 +175,32 @@ class DashboardController extends Controller
     ->get();
     
     $topOrders = Order::select(
-        'red_order as reference_commande',
-        DB::raw('(nom || " " || prenom) AS nom_client'),
+        'red_order AS reference_commande',
+        DB::raw('CONCAT(nom, " ", prenom) AS nom_client'),
         DB::raw('SUM(prix_produit * quantite_produit) AS chiffre_affaires')
     )
     ->groupBy('red_order', 'nom', 'prenom')
-    ->orderBy('chiffre_affaires', 'desc')
+    ->orderByDesc('chiffre_affaires')
     ->limit(10)
     ->get();
-
     // Commandes pour cette semaine
     $thisWeekOrders = Order::selectRaw('YEAR(date_order) as year, MONTH(date_order) as month, COUNT(*) as count')
-        ->where('date_order', '>=', now()->startOfWeek())
-        ->where('date_order', '<=', now()->endOfWeek())
-        ->groupBy('year', 'month')
-        ->orderBy('year')
-        ->orderBy('month')
-        ->get();
+    ->where('date_order', '>=', now()->startOfWeek())
+    ->where('date_order', '<=', now()->endOfWeek())
+    ->groupBy('year', 'month')
+    ->orderBy('year')
+    ->orderBy('month')
+    ->get();
     
     // Commandes pour la semaine dernière
     $lastWeekOrders = Order::selectRaw('YEAR(date_order) as year, MONTH(date_order) as month, COUNT(*) as count')
-        ->where('date_order', '>=', now()->subWeek()->startOfWeek())
-        ->where('date_order', '<=', now()->subWeek()->endOfWeek())
-        ->groupBy('year', 'month')
-        ->orderBy('year')
-        ->orderBy('month')
-        ->get();
-
+    ->where('date_order', '>=', now()->subWeek()->startOfWeek())
+    ->where('date_order', '<=', now()->subWeek()->endOfWeek())
+    ->groupBy('year', 'month')
+    ->orderBy('year')
+    ->orderBy('month')
+    ->get();
+    
     // Formater les données pour Google Charts
     $thisWeekData = $thisWeekOrders->map(function ($order) {
     return [\Carbon\Carbon::createFromDate($order->year, $order->month, 1)->format('M Y'), $order->count];
@@ -209,11 +210,17 @@ class DashboardController extends Controller
     return [\Carbon\Carbon::createFromDate($order->year, $order->month, 1)->format('M Y'), $order->count];
     });
 
-    $ventesParMois = [];
     $produitsParMois = [];
+    $ventesParMois = [];
+    $currentYear = date('Y');
+
 
     for ($i = 1; $i <= 12; $i++) {
-        $ventesParMois[] = Order::whereMonth('created_at', $i)->whereYear('created_at', date('Y'))->count();
+        $ventesParMois[] = DB::table('orders')
+            ->whereMonth('created_at', $i)
+            ->whereYear('created_at', $currentYear)
+            ->select(DB::raw('COUNT(DISTINCT red_order) as nombre_commandes'))
+            ->value('nombre_commandes');
         $produitsParMois[] = Product::whereMonth('created_at', $i)->whereYear('created_at', date('Y'))->count();
     }
 
@@ -233,7 +240,8 @@ $stats = DB::table('orders')
 ->select('gouvernorat', DB::raw('COUNT(DISTINCT red_order) as nombre_commandes'))
 ->groupBy('gouvernorat')
 ->get();
- 
+$totalClients = Order::distinct('email')->count('email');
+
 
         // Passer les données à la vue
         return view('dashboard.index', [
@@ -264,7 +272,8 @@ $stats = DB::table('orders')
     'produitsParMois'=>$produitsParMois,
     'labels'=>$labels, 
     'data'=>$data,
-    'stats' => $stats
+    'stats' => $stats,
+    'totalClients'=>$totalClients
     
          ]);
     }
@@ -276,3 +285,4 @@ $stats = DB::table('orders')
 
 
 }
+ 

@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listes de clients</title>
-    <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
-    <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
+   
     <link rel="stylesheet" href="{{ asset('assets/css/perfect-scrollbar.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/choices.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/apexcharts.css') }}">
@@ -17,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="../assets/img/logo/favicon.png" type="image/x-icon">
 
     <!-- css links -->
  
@@ -52,7 +52,7 @@
                 <div class="bg-white rounded-t-md rounded-b-md shadow-xs py-4">
                     <div class="tp-search-box flex items-center justify-between px-8 py-8">
                         <div class="search-input relative">
-                            <form method="GET" action="{{ route('dashboard.clients.index') }}">
+                        <form method="GET" action="{{ route('dashboard.clients.index') }}">
                                 <div class="search-input relative">
                                     <input
                                         name="search"
@@ -110,7 +110,7 @@
                                         </div>
                                     </td>
                                     <td class="px-3 py-3 text-end">
-                                        <a href="{{ route('dashboard.clients.commandes', ['email' => $client->email]) }}" class="text-blue-600 hover:underline">
+                                    <a href="{{ route('dashboard.clients.commandes', ['email' => $client->email]) }}" class="text-blue-600 hover:underline">
                                             {{ $client->email }}
                                         </a>
                                     </td>
@@ -129,7 +129,7 @@
                                         <div class="flex items-center justify-end space-x-2">
                                             <!-- Bouton Voir Commandes -->
                                             <div class="relative" x-data="{ editTooltip: false }">
-                                                <a href="{{ route('dashboard.clients.commandes', ['email' => $client->email]) }}" 
+                                            <a href="{{ route('dashboard.clients.commandes', ['email' => $client->email]) }}" 
                                                    class="w-10 h-10 leading-10 text-tiny bg-success text-white rounded-md hover:bg-green-600"
                                                    x-on:mouseenter="editTooltip = true" x-on:mouseleave="editTooltip = false">
                                                     <svg class="-translate-y-px" height="12" viewBox="0 0 512 512" width="12" xmlns="http://www.w3.org/2000/svg">

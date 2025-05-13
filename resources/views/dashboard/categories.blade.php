@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from html.hixstudio.net/ebazer/category.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 19 Apr 2025 11:45:34 GMT -->
-<head>
+ <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="../assets/img/logo/favicon.png" type="image/x-icon">
 
 </head>
 <body>
@@ -166,13 +166,21 @@
                                             <td class="px-3 py-4 font-normal text-[#55585B]">
                                                 {{ $category->products_count }}
                                             </td>
+                                            <td class="px-3 py-4 font-normal text-[#55585B]">
+                                                <a href="{{ route('category.show', ['categoryId' => $category->id]) }}" target="_blanks">Voir les produits de cette catégorie</a>
+
+                                            </td>
+
+
+
                                             <td class="px-3 py-4 text-end">
                                                 <div class="flex items-center justify-end space-x-2">
                                                     <button data-modal-target="editCategoryModal-{{ $category->id }}" 
                                                         data-modal-toggle="editCategoryModal-{{ $category->id }}"
                                                         class="w-10 h-10 leading-10 text-tiny bg-success text-white rounded-md hover:bg-green-600">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 512 512">
+                                                            <path d="M290.74 93.24l128 128L142.78 497.22a24 24 0 0 1-11.31 6.3l-112 24a16 16 0 0 1-18.9-18.9l24-112a24 24 0 0 1 6.3-11.31L290.74 93.24zm45.25-45.25l56.57-56.57a32 32 0 0 1 45.25 0l45.25 45.25a32 32 0 0 1 0 45.25l-56.57 56.57-90.5-90.5z"/>
+                                                          </svg>                                                </button>
 
                                                     
                                                     <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="POST" class="inline">
@@ -181,8 +189,9 @@
                                                         <button type="submit" 
                                                                 class="w-10 h-10 leading-[33px] text-tiny bg-white border border-gray text-slate-600 rounded-md hover:bg-danger hover:border-danger hover:text-white"
                                                                 onclick="return confirm('Are you sure you want to delete this category?')">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 448 512">
+                                                                    <path d="M135.2 17.7C140.5 7.1 151.1 0 163.2 0h121.6c12.1 0 22.7 7.1 28 17.7L328 32H432c8.8 0 16 7.2 16 16s-7.2 16-16 16H416l-20.6 372.1c-1.8 32.5-28.7 57.9-61.3 57.9H113.9c-32.6 0-59.5-25.4-61.3-57.9L32 64H16C7.2 64 0 56.8 0 48s7.2-16 16-16H120l15.2-14.3zM182.4 64l-7.2 64h97.6l-7.2-64H182.4zM128 448V192c0-8.8 7.2-16 16-16s16 7.2 16 16v256c0 8.8-7.2 16-16 16s-16-7.2-16-16zm80 0V192c0-8.8 7.2-16 16-16s16 7.2 16 16v256c0 8.8-7.2 16-16 16s-16-7.2-16-16zm80 0V192c0-8.8 7.2-16 16-16s16 7.2 16 16v256c0 8.8-7.2 16-16 16s-16-7.2-16-16z"/>
+                                                                  </svg>                                                        </button>
                                                     </form>
                                                     <div id="editCategoryModal-{{ $category->id }}" tabindex="-1" aria-hidden="true"
                                                         class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-[100vh] bg-black bg-opacity-40 flex items-center justify-center">
@@ -316,5 +325,4 @@
     
 </body>
 
-<!-- Mirrored from html.hixstudio.net/ebazer/category.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 19 Apr 2025 11:45:34 GMT -->
-</html>
+ </html>

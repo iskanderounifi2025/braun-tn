@@ -1,15 +1,40 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+  @php
+  $links = $product->additional_links ? json_decode($product->additional_links, true) : [];
+  $firstLink = count($links) > 0 ? $links[0]['url'] : '#';
+  $secondLink = count($links) > 1 ? $links[1]['url'] : $firstLink;
+  $currency = session('currency', 'DT');
+@endphp
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $product->name }}</title>
+    <title>{{ $product->name }} - Acheter {{ $product->category->name ?? 'Produit' }} en Tunisie | NomDeTonSite</title>
+    <meta name="description" content="{{ Str::limit(strip_tags($product->desciption), 160) }}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ url('/produit/'.$product->id) }}">
+  
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="product">
+    <meta property="og:title" content="{{ $product->name }}">
+    <meta property="og:description" content="{{ Str::limit(strip_tags($product->desciption), 160) }}">
+    <meta property="og:image" content="{{ $firstLink }}">
+    <meta property="og:url" content="{{ url('/produit/'.$product->id) }}">
+    <meta property="og:site_name" content="Braun Tunisie">
+  
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $product->name }}">
+    <meta name="twitter:description" content="{{ Str::limit(strip_tags($product->desciption), 160) }}">
+    <meta name="twitter:image" content="{{ $firstLink }}">
+    <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 	 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-     <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
+      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <style>
     body {
@@ -20,14 +45,14 @@
 
 
  
-<body class="bg-black">
+<body class="py-20 md:py-16 bg-black flex flex-col min-h-screen">
 
   @include('dashboard.components.site.nav')
-  <div class="py-16">
-  @include('dashboard.components.site.counter')
-  </div>
+  <div class="">
+    @include('dashboard.components.site.counter')
+</div>
   
-    <div class="container mx-auto px-4 py-2 max-w-6xl bg-white rounded-lg">
+    <div class="container mx-auto px-4 py-10 max-w-6xl bg-white rounded-lg">
         <div class="flex flex-col md:flex-row gap-8">
             <!-- Colonne gauche - Images -->
  
@@ -44,7 +69,7 @@
     @php
         $discount = round(100 - ($product->sale_price / $product->regular_price * 100));
     @endphp
-    <span class="absolute top-2 right-2 bg-red-500 text-white text-xs px-3 py-1 rounded-full z-10">
+    <span class="absolute top-2 right-2 text-white text-xs px-1 py-3 rounded-full z-10 h-[40px] w-[40px]" style="background: linear-gradient(50deg, #a28147, #c19b56);">
         -{{ $discount }}%
     </span>
 @endif  
@@ -126,9 +151,9 @@
                         
                         <!-- Bouton d'action avec intégration du panier -->
                         <button 
-                          class="bg-black text-white py-2 px-5 rounded-full font-medium transition duration-200 flex items-center justify-center"
+                          class="text-white py-2 px-5 rounded-full font-medium transition duration-200 flex items-center justify-center"
                           onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale_price ?? $product->regular_price }}, '{{ $firstLink }}', parseInt(document.getElementById('quantity').value))"
-                        >
+                          style="background: linear-gradient(50deg, #a28147, #c19b56);">
                           <i class="fas fa-shopping-cart mr-2"></i>
                           Ajouter au panier
                         </button>
@@ -162,7 +187,16 @@
                 </div>
             </div>
 
-
+            <script>
+              const swiper = new Swiper('.mySwiper', {
+                loop: true,
+                pagination: {
+                  el: '.swiper-pagination',
+                  clickable: true,
+                },
+              });
+            </script>
+            
         </div>
     </div>
 <!--
@@ -180,7 +214,8 @@
 </div>
 -->
 <br><br>
- 
+@include('dashboard.components.site.footer')
+
     
 </body>
 </html>

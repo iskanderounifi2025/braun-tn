@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Braun - Commandes</title>
-    <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/img/logo/favicon.png" type="image/x-icon">
 
     <!-- css links -->
     <link rel="stylesheet" href="{{ asset('assets/css/perfect-scrollbar.css') }}">
@@ -63,7 +63,7 @@
                 
                     <div class="tp-search-box flex items-center justify-between px-8 py-8 flex-wrap">
                         <div class="search-input relative">
-                            <form action="{{ route('dashboard.commandes.groupedOrders') }}" method="GET">
+                        <form action="{{ route('dashboard.commandes.groupedOrders') }}" method="GET">
                                 <input class="input h-[44px] w-full pl-14" type="text" name="search" placeholder="Rechercher par identifiant de commande" value="{{ request('search') }}">
                                 <button class="absolute top-1/2 left-5 translate-y-[-50%] hover:text-theme">
                                     <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -91,7 +91,7 @@
                                     <th class="py-3 uppercase font-semibold">E-mail</th>
                                     <th class="py-3 uppercase font-semibold">Gouvernorat</th>
                                     <th class="py-3 uppercase font-semibold">Adresse</th>
-                                    <th class="py-3 uppercase font-semibold">Montant Total</th>
+                                    <th class="py-3 uppercase font-semibold"> Total</th>
                                     <th class="py-3 uppercase font-semibold">Statut</th>
                                     <th class="py-3 uppercase font-semibold">Modifier</th>
                                     <th class="py-3 uppercase font-semibold">Action</th>
@@ -138,7 +138,7 @@
                                             </a>
                                         </td>
                                         <td class="px-3 py-3">
-                                            <form action="{{ route('dashboard.commandes.updateStatusOrder', $ordersGroup[0]->red_order) }}" method="POST">
+                                        <form action="{{ route('dashboard.commandes.updateStatusOrder', $ordersGroup[0]->red_order) }}" method="POST">
                                                 @csrf
                                                 @method('PUT')
                                                 <select name="status" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
@@ -153,9 +153,33 @@
                                         </td>
                                         <td class="px-9 py-3 text-end">
                                             <div class="flex justify-end space-x-2">
-                                                <a href="{{ route('dashboard.commandes.show', $red_order) }}" class="px-3 h-10 bg-success text-white rounded-md hover:bg-green-600" target="_blank">Voir</a>
+                                                <a href="{{ route('dashboard.commandes.show', $red_order) }}" 
+                                                   class="flex items-center justify-center w-10 h-10 bg-green-600 text-white rounded-md hover:bg-green-700" 
+                                                   target="_blank" title="Voir la commande">
+                                                    <!-- Icone Vue (œil) -->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12s3.75-6.75 9.75-6.75S21.75 12 21.75 12s-3.75 6.75-9.75 6.75S2.25 12 2.25 12z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    </svg>
+                                                </a>
                                             </div>
                                         </td>
+                                        
+                                        <td class="px-9 py-3 text-end">
+                                            <div class="flex justify-end space-x-2">
+                                                <a href="{{ route('dashboard.commandes.export.pdf', $red_order) }}" 
+                                                   target="_blank" 
+                                                   class="flex items-center justify-center w-10 h-10 bg-red-600 text-white rounded-md hover:bg-red-700"
+                                                   title="Exporter en PDF">
+                                                    <!-- Icône PDF (document) -->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a.75.75 0 00-.75-.75h-1.5V6a.75.75 0 00-.75-.75H8.25a.75.75 0 00-.75.75v4.875H6a.75.75 0 00-.75.75v2.625a.75.75 0 00.75.75h1.5V18a.75.75 0 00.75.75h9a.75.75 0 00.75-.75v-3h1.5a.75.75 0 00.75-.75z" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </td>
+                                        
+                                        
                                     </tr>
                                 @endforeach
                             </tbody>

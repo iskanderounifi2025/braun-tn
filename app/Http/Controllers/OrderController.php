@@ -318,7 +318,7 @@ class OrderController extends Controller
                         'orders.prix_produit',
                         'products.id AS product_id',  
                         'products.name AS product_name',
-                        DB::raw("JSON_UNQUOTE(JSON_EXTRACT(products.additional_links, '$[0].url')) AS product_image")
+                        'products.additional_links AS product_image'
                     )
                     ->where('orders.red_order', $red_order)
                     ->get();
@@ -357,7 +357,7 @@ class OrderController extends Controller
      
          // Vérifier si la commande existe
          if (!$order) {
-             return redirect()->route('commandes.groupedOrders')->with('error', 'Aucune commande trouvée avec cet ID.');
+             return redirect()->route('dashboard.commandes.groupedOrders')->with('error', 'Aucune commande trouvée avec cet ID.');
          }
      
          // Mettre à jour le statut de la commande
@@ -365,7 +365,7 @@ class OrderController extends Controller
              ->where('red_order', $red_order)
              ->update(['status' => $request->status]);
      
-         return redirect()->route('commandes.groupedOrders')->with('success', 'Statut de la commande mis à jour.');
+         return redirect()->route('dashboard.commandes.groupedOrders')->with('success', 'Statut de la commande mis à jour.');
      }
      
  
@@ -446,6 +446,45 @@ public function clients(Request $request)
 
 
 
+
+public function exportPdf($red_order)
+{
+    $ordersGroup = DB::table('orders')
+        ->join('products', 'orders.id_produit', '=', 'products.id')
+        ->select(
+            'orders.red_order',
+            'orders.nom',
+            'orders.prenom',
+            'orders.telephone',
+            'orders.email',
+            'orders.date_order',
+            'orders.adress',
+            'orders.gouvernorat',
+            'orders.quantite_produit',
+            'orders.prix_produit',
+            'products.name AS produit'
+        )
+        ->where('orders.red_order', $red_order)
+        ->get();
+
+    if ($ordersGroup->isEmpty()) {
+        abort(404, 'Commande introuvable.');
+    }
+
+    // Ajouter total et prix_unitaire dans chaque élément
+    foreach ($ordersGroup as $order) {
+        $order->quantite = $order->quantite_produit;
+        $order->prix_unitaire = $order->prix_produit;
+        $order->total = $order->quantite * $order->prix_unitaire;
+    }
+
+    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('dashboard.commande-pdf', [
+        'ordersGroup' => $ordersGroup,
+        'red_order' => $red_order
+    ]);
+
+    return $pdf->stream("commande-{$red_order}.pdf");
+}
 
 
 

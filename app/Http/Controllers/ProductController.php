@@ -13,6 +13,13 @@ use Carbon\Carbon;
 class ProductController extends Controller
 {
 
+
+    public function boot()
+    {
+        Carbon::setLocale('fr');
+        App::setLocale('fr');
+    }
+
     public function add_product()
     {
         $categories = Category::whereNull('parent_id')->orderBy('name')->get();
@@ -77,9 +84,8 @@ class ProductController extends Controller
         // Stock par défaut
         $product->stock_status = 'instock';
     
-        // Définir l'ordre d'affichage
-        #$maxOrder = Product::max('order');
-        #$product->order = $maxOrder ? (int)$maxOrder + 1 : 1;
+        // Définir l’ordre d’affichage
+        #$product->order = Product::max('order') + 1;
     
         // Enregistrer
         $product->save();
@@ -241,12 +247,12 @@ public function showCategoryAndSubCategoryProducts($categoryId, Request $request
             $productsQuery->orderBy('name', 'desc');
             break;
         default:
-            $productsQuery->orderBy('created_at', 'desc');
+            $productsQuery->orderBy('created_at', 'asc');
             break;
     }
 
     // Récupérer les produits filtrés ou paginés
-    $products = $productsQuery->paginate(48);
+    $products = $productsQuery->orderBy('sale_price', 'asc')->paginate(48);
 
     // Retourner la vue avec les données nécessaires
     return view('categorie', compact('category', 'subCategories', 'products', 'sort_by'));
@@ -299,7 +305,7 @@ public function update(Request $request, Product $product)
                     $iconPath = $request->file("specifications.$index.icon")->store('specification-icons', 'public');
                     $specData['icon'] = $iconPath;
                 } elseif (isset($specification['existing_icon'])) {
-                    // Garde l'icône existante si elle est envoyée (cas de l'édition)
+                    // Garde l’icône existante si elle est envoyée (cas de l’édition)
                     $specData['icon'] = $specification['existing_icon'];
                 }
 
@@ -329,7 +335,21 @@ public function edit($id)
 }
 
 
+public static function getNotifications()
+{
+    $lowStockThreshold = 5;
 
+    $lowStockProducts = Product::where('quantity', '>', 0)
+        ->where('quantity', '<=', $lowStockThreshold)
+        ->get();
+
+    $outOfStockProducts = Product::where('quantity', '=', 0)->get();
+
+    return [
+        'low_stock' => $lowStockProducts,
+        'out_of_stock' => $outOfStockProducts,
+    ];
+}
 
 
 

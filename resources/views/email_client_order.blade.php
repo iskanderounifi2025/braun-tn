@@ -62,7 +62,7 @@
         <tbody>
             @foreach($orders as $order)
                 <tr>
-                    <td class="p-2 border border-gray-300">{{ $order->id_produit }}</td>
+                    <td class="p-2 border border-gray-300">{{ $order->product->name }}</td>
                     <td class="p-2 border border-gray-300">{{ $order->quantite_produit }}</td>
                     <td class="p-2 border border-gray-300">{{ $order->prix_produit }} DT</td>
                     <td class="p-2 border border-gray-300">{{ $order->quantite_produit * $order->prix_produit }} DT</td>

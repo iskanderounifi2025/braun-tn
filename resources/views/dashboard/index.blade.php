@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <script src="https://cdn.tailwindcss.com"></script>
-   <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
+<link rel="shortcut icon" href="../assets/img/logo/favicon.png" type="image/x-icon">
 
 </head>
 <body>
@@ -61,10 +61,10 @@
                     <!-- Carte 2 - Montant total -->
                     <div class="widget-item bg-white p-6 flex justify-between rounded-md">
                         <div>
-                            <h4 class="text-xl font-semibold text-slate-700 mb-1 leading-none">{{ number_format($totalAmount, 2, ',', ' ') }} DT</h4>
-                            <p class="text-tiny leading-4">Montant total</p>
-                            <div class="badge space-x-1 text-purple bg-purple/10"><span>30%</span> 
-                                <i class="fas fa-arrow-up text-xs"></i>
+                            <h4 class="text-xl font-semibold text-slate-700 mb-1 leading-none">{{ number_format($statusData['encours']['total_amount'], 3, ',', ' ') }} DT</h4>
+                            <p class="text-tiny leading-4">Montant de commande Encoure</p>
+                            <div class="badge space-x-1 text-purple bg-purple/10"><!--<span>30%</span> 
+                                <i class="fas fa-arrow-up text-xs"></i>-->
                             </div>
                         </div>
                         <div>
@@ -77,11 +77,11 @@
                     <!-- Carte 3 - Nouveaux clients -->
                     <div class="widget-item bg-white p-6 flex justify-between rounded-md">
                         <div>
-                            <h4 class="text-xl font-semibold text-slate-700 mb-1 leading-none">5.8K</h4>
+                            <h4 class="text-xl font-semibold text-slate-700 mb-1 leading-none">{{ number_format($totalClients) }}</h4>
                             <p class="text-tiny leading-4">Nouveaux clients ce mois-ci</p>
-                            <div class="badge space-x-1 text-info bg-info/10"><span>13%</span> 
+                            <!--<div class="badge space-x-1 text-info bg-info/10"><span>13%</span> 
                                 <i class="fas fa-arrow-up text-xs"></i>
-                            </div>
+                            </div>-->
                         </div>
                         <div>
                             <span class="text-lg text-white rounded-full flex items-center justify-center h-12 w-12 shrink-0 bg-info">
@@ -129,10 +129,10 @@
                         <div>
                             <h4 class="text-xl font-semibold text-slate-700 mb-1 leading-none">{{ number_format($statusData['annulé']['total_amount'], 2, ',', ' ') }} DT</h4>
                             <p class="text-tiny leading-4">Montant des commandes annulées</p>
-                            <div class="badge space-x-1 text-purple bg-purple/10">
+                            <!--<div class="badge space-x-1 text-purple bg-purple/10">
                                 <span>30%</span>
                                 <i class="fas fa-arrow-up text-xs"></i>
-                            </div>
+                            </div>-->
                         </div>
                         <div>
                             <span class="text-lg text-white rounded-full flex items-center justify-center h-12 w-12 shrink-0 bg-purple">
@@ -161,7 +161,7 @@
                     <!-- Carte 4 - Montant des commandes livrées -->
                     <div class="widget-item bg-white p-6 flex justify-between rounded-md">
                         <div>
-                            <h4 class="text-xl font-semibold text-slate-700 mb-1 leading-none">{{ number_format($statusData['traité']['total_amount'], 2, ',', ' ') }} DT</h4>
+                            <h4 class="text-xl font-semibold text-slate-700 mb-1 leading-none">{{ number_format($statusData['traité']['total_amount'], 3, ',', ' ') }} DT</h4>
                             <p class="text-tiny leading-4">Montant des commandes livrées</p>
                             <div class="badge space-x-1 text-warning bg-warning/10">
                                 <span>10%</span>
@@ -236,10 +236,10 @@
                                         <td class="px-3 py-3 font-normal text-slate-600">
                                             @if($item['sex'] === 'male')
                         Homme
-                    @elseif($item['sex'] === 'female')
-                        Femme
+                    @elseif($item['sex'] === 'male')
+                        Homme
                     @else
-                        Autre
+                        Femmes
                     @endif
                                         </td>
                                         <td class="px-3 py-3 font-normal text-slate-600">
