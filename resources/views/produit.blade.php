@@ -28,7 +28,7 @@
     <meta name="twitter:title" content="{{ $product->name }}">
     <meta name="twitter:description" content="{{ Str::limit(strip_tags($product->desciption), 160) }}">
     <meta name="twitter:image" content="{{ $firstLink }}">
-    <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="https://res.cloudinary.com/dlhonl1wo/image/upload/v1747046500/favicon_tvqtpu.png" type="image/x-icon">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -103,9 +103,9 @@
                     
                     <!-- Prix -->
                     <div class="flex items-center mb-4">
-                        <span class="text-2xl font-bold text-black"> {{ number_format($product->sale_price > 0 ? $product->sale_price : $product->regular_price, 2) }} DT</span>
+                        <span class="text-2xl font-bold text-black"> {{ number_format($product->sale_price > 0 ? $product->sale_price : $product->regular_price) }} DT</span>
                         @if($product->sale_price > 0)
-                        <span class="text-lg text-gray-500 line-through ml-2"> {{ number_format($product->regular_price, 2) }} DT</span>
+                        <span class="text-lg text-gray-500 line-through ml-2"> {{ number_format($product->regular_price) }} DT</span>
                         @endif
 
                       </div>

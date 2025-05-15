@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="https://res.cloudinary.com/dlhonl1wo/image/upload/v1747046500/favicon_tvqtpu.png" type="image/x-icon">
 
     <style>
         body {
@@ -79,9 +79,9 @@
                         <div class="text-center mb-4">
                             <p class="text-lg text-gray-600">
                                 @if($product->sale_price && $product->regular_price)
-                                    <span class="line-through mr-2 text-gray-500">{{ number_format($product->regular_price, 2) }} {{ $currency }}</span>
+                                    <span class="line-through mr-2 text-gray-500">{{ number_format($product->regular_price) }} {{ $currency }}</span>
                                 @endif
-                                <span class="text-xl font-bold text-black">{{ number_format($product->sale_price ?? $product->regular_price, 2) }} {{ $currency }}</span>
+                                <span class="text-xl font-bold text-black">{{ number_format($product->sale_price ?? $product->regular_price) }} {{ $currency }}</span>
                             </p>
                         </div>
 

@@ -20,7 +20,7 @@
   <meta property="og:locale" content="fr_FR">
 
   <!-- Favicon -->
-  <link rel="icon" href="assets/img/logo/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="https://res.cloudinary.com/dlhonl1wo/image/upload/v1747046500/favicon_tvqtpu.png" type="image/x-icon">
 
   <!-- FontAwesome & TailwindCSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

@@ -11,7 +11,7 @@
   <meta name="keywords" content="Braun, remboursement, épilateur, Silk-épil, Tunisie, essai, garantie, retour, politique de retour">
   <meta name="author" content="Braun Tunisie">
   <link rel="canonical" href="https://www.braun.tn/politique-de-remboursement" />
-  <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="https://res.cloudinary.com/dlhonl1wo/image/upload/v1747046500/favicon_tvqtpu.png" type="image/x-icon">
 
   <!-- Open Graph (pour Facebook et autres) -->
   <meta property="og:title" content="Politique de remboursement | Braun Tunisie" />

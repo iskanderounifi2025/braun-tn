@@ -224,7 +224,8 @@ public function showCategoryAndSubCategoryProducts($categoryId, Request $request
     $subCategoryId = $request->input('subCategoryId');
 
     // Créer la requête de base pour récupérer les produits de la catégorie principale
-    $productsQuery = Product::where('category_id', $categoryId);
+    $productsQuery = Product::where('category_id', $categoryId)
+                            ->where('quantity', '>', 0); // Filtrer les produits en stock uniquement
 
     // Si un ID de sous-catégorie est fourni, on ajoute la condition de sous-catégorie
     if ($subCategoryId) {
@@ -254,6 +255,7 @@ public function showCategoryAndSubCategoryProducts($categoryId, Request $request
     // Récupérer les produits filtrés ou paginés
     $products = $productsQuery->orderBy('sale_price', 'asc')->paginate(48);
 
+   
     // Retourner la vue avec les données nécessaires
     return view('categorie', compact('category', 'subCategories', 'products', 'sort_by'));
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="fr">
 <head>
   
@@ -12,7 +12,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.braun.tn">
   <meta property="og:image" content="https://res.cloudinary.com/ddi29nbzl/image/upload/v1745834716/SE9_1_fmisxu.png">
-  <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="https://res.cloudinary.com/dlhonl1wo/image/upload/v1747046500/favicon_tvqtpu.png" type="image/x-icon">
 
   <title>Braun Tunisie</title>
   <link rel="canonical" href="https://www.braun.tn" />
@@ -57,8 +57,8 @@
               <div class="md:w-1/2">
                 <h2 class="text-xl font-bold text-gray-800">Face Spa</h2>
                 <p class="text-gray-600 mb-4">À partir de : </p>
-                <span class="px-5 line-through mr-2">345 DT</span><br>
-                <span class="px-5 text-2xl font-bold text-black">280 DT</span>
+                <span class="line-through">325 DT</span><br>
+                <span class="text-2xl font-bold text-black">260 DT</span>
               </div>
               
               <div class="md:w-1/2 flex justify-center md:justify-end mb-4 md:mb-0">
@@ -113,8 +113,8 @@
               <div class="md:w-1/2">
                 <h2 class="text-xl font-bold text-gray-800">Silk·épil 3</h2>
                 <p class="text-gray-600 mb-4">À partir de : </p>
-                <span class="px-5 line-through mr-2">209 DT</span><br>
-                <span class="px-5 text-2xl font-bold text-black">160 DT</span>
+                <span class="line-through">200 DT</span><br>
+                <span class="text-2xl font-bold text-black">160 DT</span>
               </div>
               
               <div class="md:w-1/2 flex justify-center md:justify-end mb-4 md:mb-0">
@@ -164,8 +164,8 @@
               <div class="md:w-1/2">
                 <h2 class="text-xl font-bold text-gray-800">Silk·épil 5</h2>
                 <p class="text-gray-600 mb-4">À partir de : </p>
-                <span class="px-5 line-through mr-2">395 DT</span><br>
-                <span class="px-5 text-2xl font-bold text-black">300 DT</span>
+                <span class="line-through">375 DT</span><br>
+                <span class="text-2xl font-bold text-black">300 DT</span>
               </div>
               
               <div class="md:w-1/2 flex justify-center md:justify-end mb-4 md:mb-0">
@@ -228,8 +228,8 @@
               <div class="md:w-1/2">
                 <h2 class="text-xl font-bold text-gray-800">Silk·épil 9</h2>
                 <p class="text-gray-600 mb-4">À partir de : </p>
-                <span class="px-5 line-through mr-2">783 DT</span><br>
-                <span class="px-5 text-2xl font-bold text-black">600 DT</span>
+                <span class="line-through">1000 DT</span><br>
+                <span class="text-2xl font-bold text-black">800 DT</span>
               </div>
               
               <div class="md:w-1/2 flex justify-center md:justify-end mb-4 md:mb-0">
@@ -289,8 +289,8 @@
               <div class="md:w-1/2">
                 <h2 class="text-xl font-bold text-gray-800">Silk·épil 9 Flex</h2>
                 <p class="text-gray-600 mb-4">À partir de : </p>
-                <span class="px-5 line-through mr-2">1251 DT</span><br>
-                <span class="px-5 text-xl font-bold text-black">950 DT</span>
+                <span class="line-through">1200 DT</span><br>
+                <span class="text-xl font-bold text-black">960 DT</span>
               </div>
               
               <div class="md:w-1/2 flex justify-center md:justify-end mb-4 md:mb-0">

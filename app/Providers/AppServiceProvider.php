@@ -9,6 +9,8 @@ use App\Models\Demande_revendeur;
 use App\Http\Controllers\ProductController;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Storage;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,16 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+            URL::forceRootUrl('https://braun.tn');
+            
+            // Force HTTPS for storage URLs
+            Storage::disk('public')->url(function ($path) {
+                return 'https://braun.tn/storage/' . $path;
+            });
+        }
+
         view()->composer('*', function ($view) {
             $now = Carbon::now();
             $last24Hours = $now->copy()->subDay();

@@ -10,27 +10,40 @@
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
     <link rel="shortcut icon" href="../assets/img/logo/favicon.png" type="image/x-icon">
-
+ 
 </head>
 <body class="bg-slate-100">
-    <div class="tp-main-wrapper h-screen" x-data="{ sideMenu: false }">
+   
+    <div class="tp-main-wrapper bg-slate-100 h-screen" x-data="{ sideMenu: false }">
         @include('dashboard.components.sideleft')
-
-        <!-- Overlay menu mobile -->
-        <div class="fixed inset-0 z-40 bg-black/70 transition-opacity duration-300"
-             :class="sideMenu ? 'visible opacity-100' : 'invisible opacity-0'"
-             @click="sideMenu = false"
-             x-show="sideMenu"
-             x-transition></div>
-
-        <div class="tp-main-content lg:ml-[250px] xl:ml-[300px] w-full max-w-[calc(100%-300px)]" x-data="{ searchOverlay: false }">
+ 
+        <div class="fixed top-0 left-0 w-full h-full z-40 bg-black/70 transition-all duration-300" :class="sideMenu ? 'visible opacity-1' : '  invisible opacity-0 '" x-on:click="sideMenu = ! sideMenu"> </div>
+ 
+        <div class="tp-main-content lg:ml-[250px] xl:ml-[300px] w-[calc(100% - 300px)]"  x-data="{ searchOverlay: false }">
+ 
             @include('dashboard.components.header')
-
+ 
+            <div class="body-content px-8 py-8 bg-slate-100">
+               
+ 
+                <!-- table -->
+                <div class="bg-white rounded-t-md rounded-b-md shadow-xs py-4">
+                 
+ 
             <main class="body-content px-4 py-6 sm:px-8 sm:py-8">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-10">
-                    <h1 class="text-2xl sm:text-[28px] font-semibold">Gestion des Utilisateurs</h1>
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+                    <div>
+                        <h3 class="text-3xl font-bold text-gray-800">Equipes</h3>
+                        <ul class="text-sm font-medium flex items-center space-x-2 text-gray-500 mt-1">
+                            <li>
+                                <a href="{{ route('dashboard.home') }}" class="hover:text-blue-600">Tableau de bord</a>
+                            </li>
+                            <li><i class="fas fa-chevron-right text-xs"></i></li>
+                            <li class="text-gray-500"> <a href="{{ route('dashboard.users.index') }}" class="hover:text-blue-600">Equipes </a></li>
+                        </ul>
+                    </div>
                 </div>
-
+ 
                 @if(session('success'))
                 <div class="mb-6 p-4 bg-green-50 border-l-4 border-green-500 text-green-700 rounded-lg shadow-sm">
                     <div class="flex items-center">
@@ -39,7 +52,7 @@
                     </div>
                 </div>
                 @endif
-
+ 
                 <!-- Formulaire Ajout Utilisateur -->
                 <div class="bg-white p-6 rounded-md shadow-sm mb-8">
                     <h2 class="text-xl font-semibold text-gray-800 mb-6 pb-3 border-b">Ajouter un nouvel utilisateur</h2>
@@ -55,7 +68,7 @@
                                    class="w-full h-11 rounded-md border border-gray-300 px-4 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                             @error('name') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
                         </div>
-
+ 
                         <!-- Email -->
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
@@ -66,7 +79,7 @@
                                    class="w-full h-11 rounded-md border border-gray-300 px-4 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                             @error('email') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
                         </div>
-
+ 
                         <!-- Mot de passe -->
                         <div>
                             <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
@@ -82,7 +95,7 @@
                             </div>
                             @error('password') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
                         </div>
-
+ 
                         <!-- Type utilisateur -->
                         <div>
                             <label for="utype" class="block text-sm font-medium text-gray-700 mb-1">Type d'utilisateur</label>
@@ -92,7 +105,7 @@
                                 <option value="ADM" {{ old('utype') == 'ADM' ? 'selected' : '' }}>Administrateur</option>
                             </select>
                         </div>
-
+ 
                         <!-- Bouton -->
                         <div class="pt-2">
                             <button type="submit"
@@ -102,7 +115,7 @@
                         </div>
                     </form>
                 </div>
-
+ 
                 <!-- Liste des utilisateurs -->
                 <div class="bg-white p-6 rounded-md shadow-sm">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-6">
@@ -119,7 +132,7 @@
                             </div>
                         </form>
                     </div>
-
+ 
                     <!-- Tableau -->
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm text-left text-gray-500">
@@ -168,7 +181,7 @@
                             </tbody>
                         </table>
                     </div>
-
+ 
                     <!-- Pagination -->
                     <div class="mt-6">
                         {{ $users->withQueryString()->links() }}
@@ -177,7 +190,9 @@
             </main>
         </div>
     </div>
-
+        </div>
+    </div>
+   
     <script>
         function togglePasswordVisibility(id) {
             const input = document.getElementById(id);
@@ -185,6 +200,6 @@
         }
     </script>
         @include('dashboard.components.js')
-
+ 
 </body>
 </html>
